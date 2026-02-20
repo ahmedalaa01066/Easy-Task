@@ -1,0 +1,40 @@
+<p-dialog header="Add Document" [(visible)]="visible" [modal]="true" styleClass="add-candidate-dialog"
+    [style]="{width: '600px'}" (onHide)="onDialogHide()">
+
+    <div class="candidate-form">
+
+        <div class="form-row">
+            <div class="form-field full-width-row my-1">
+                <label for="documents">Upload Documents</label>
+
+                <div class="upload-box full-width" (click)="fileInput.click()" (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.dragover]="isDragOver">
+
+                    <input type="file" id="documents" #fileInput (change)="onFileSelected($event)" multiple
+                        accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, video/*" hidden />
+
+
+                    <img src="../../../../../assets/images/Featured icon.png">
+
+                    <p>
+                        <strong>Click to upload</strong> or drag and drop<br />
+                    </p>
+                </div>
+
+                <ul class="uploaded-list" *ngIf="selectedFiles.length > 0">
+                    <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="closeDialog()" class="cancel-btn">
+            </p-button>
+
+            <p-button label="Save" (onClick)="addDocuments()" class="save-btn"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>

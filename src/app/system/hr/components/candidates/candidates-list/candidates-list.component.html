@@ -1,0 +1,122 @@
+<div class="candidates-table-container">
+  <!-- Table Header -->
+  <div class="table-header">
+    <h3 class="table-title">All candidates</h3>
+  </div>
+
+  <!-- Data Table -->
+  <p-table [value]="candidates" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [first]="first"
+    responsiveLayout="stack" (onPage)="onPageChange($event)" [scrollable]="true" scrollHeight="600px"
+    [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" [contextMenu]="menuItems"
+    styleClass="candidates-table">
+    <!-- All Candidates Column -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th id="candidate-col">All Candidates</th>
+        <th id="candidate-col">Code</th>
+        <th id="level-col">Level</th>
+        <th id="level-col">Email</th>
+        <th id="manager-col">Manager</th>
+        <th id="position-col">Position</th>
+        <th id="status-col">Status</th>
+        <th id="level-col">JobCode</th>
+        <th id="level-col">PhoneNumber</th>
+        <th id="level-col">Management</th>
+        <th id="level-col">department</th>
+        <th id="date-col">
+          <div class="date-header text-nowrap">
+            <span>Joining date</span>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-candidate>
+      <tr>
+        <!-- Candidate Info -->
+        <td class="candidate-info">
+          <div class="candidate-cell">
+            <p-avatar [label]="getInitials(candidate.firstName, candidate.lastName)" size="normal" shape="circle"
+              [style]="{
+                'background-color': getAvatarColor(
+                  candidate.firstName,
+                  candidate.lastName
+                ),
+                color: '#ffffff'
+              }">
+            </p-avatar>
+            <div class="candidate-details">
+              <div class="candidate-name" (click)="goToProfile(candidate.id)">{{ candidate.firstName +' ' + candidate.lastName }}</div>
+            </div>
+          </div>
+        </td>
+
+         <td id="level-cell">
+          <span class="level-text text-nowrap">{{ candidate.jobCode }}</span>
+        </td>
+        <!-- Level -->
+        <td id="level-cell">
+          <span class="level-text text-nowrap">{{ candidate.level }}</span>
+        </td>
+        <!-- email -->
+        <td id="email-cell">
+          <span class="level-text">{{ candidate.email }}</span>
+        </td>
+
+        <!-- Manager -->
+        <td id="manager-cell">
+          <span class="manager-text">{{ candidate.manager }}</span>
+        </td>
+
+        <!-- Position -->
+        <td id="position-cell">
+          <span class="position-text">{{ candidate.position }}</span>
+        </td>
+
+        <!-- Status -->
+        <td id="status-cell">
+          <p-tag [value]="candidate.statusName" [severity]="getStatusSeverity(candidate.candidateStatus)"
+            [rounded]="true">
+          </p-tag>
+        </td>
+
+        <!-- jobCode -->
+        <td id="jobCode-cell">
+          <span class="position-text">{{ candidate.jobCode }}</span>
+        </td>
+        <!-- phoneNumber -->
+        <td id="phoneNumber-cell">
+          <span class="position-text">{{ candidate.phoneNumber }}</span>
+        </td>
+        <!-- management -->
+        <td id="management-cell">
+          <span class="position-text">{{ candidate.management }}</span>
+
+        </td>
+        <!-- department -->
+        <td id="department-cell">
+          <span class="position-text">{{ candidate.department }}</span>
+        </td>
+
+        <!-- Joining Date -->
+        <td id="date-cell">
+          <span class="date-text text-nowrap">{{ candidate.joiningDate | date: 'MMM dd, yyyy' }}</span>
+        </td>
+
+      </tr>
+    </ng-template>
+
+    <!-- Empty State -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="100%" class="empty-message">
+          <div class="empty-state">
+            <i class="pi pi-users empty-icon"></i>
+            <p>No candidates found</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

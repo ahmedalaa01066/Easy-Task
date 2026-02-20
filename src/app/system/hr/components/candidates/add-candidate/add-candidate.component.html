@@ -1,0 +1,324 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+  (onShow)="onDialogShow()" styleClass="add-candidate-dialog" header="Add New Candidate"
+  [style]="{ width: '600px', minHeight: '600px' }" (onHide)="onDialogHide()">
+
+  <!-- Steps Header -->
+  <div class="steps-container">
+    <div class="custom-steps">
+      <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 0"
+        [class.completed]="currentStep > 0">
+        <div class="step-indicator mb-0 me-2">
+          <i *ngIf="currentStep > 0" class="pi pi-check"></i>
+          <span *ngIf="currentStep === 0">1</span>
+          <span *ngIf="currentStep < 0">1</span>
+        </div>
+        <p class="step-title mb-0">Create Main Info</p>
+      </div>
+
+      <div class="step-connector" [class.completed]="currentStep > 0"> <img src="assets/images/chevrons-right.svg"
+          alt="chevron-right"></div>
+
+      <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 1"
+        [class.completed]="currentStep > 1">
+        <div class="step-indicator mb-0 me-2">
+          <i *ngIf="currentStep > 1" class="pi pi-check"></i>
+          <span *ngIf="currentStep === 1">2</span>
+          <span *ngIf="currentStep < 1">2</span>
+        </div>
+        <p class="step-title mb-0">Position Details</p>
+      </div>
+
+      <div class="step-connector" [class.completed]="currentStep > 1"> <img src="assets/images/chevrons-right.svg"
+          alt="chevron-right"></div>
+
+      <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 2"
+        [class.completed]="currentStep > 2">
+        <div class="step-indicator mb-0 me-2">
+          <i *ngIf="currentStep > 2" class="pi pi-check"></i>
+          <span *ngIf="currentStep === 2">3</span>
+          <span *ngIf="currentStep < 2">3</span>
+        </div>
+        <p class="step-title mb-0">File Documents</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Content -->
+  <form [formGroup]="candidateForm" class="candidate-form">
+
+    <!-- Step 1: Create Main Info -->
+    <div *ngIf="currentStep === 0" class="form-step">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName">First name <span class="error-message">*</span></label>
+          <input id="firstName" type="text" pInputText formControlName="firstName" placeholder="First name"
+            (blur)="generateEmail()" class="form-input" />
+          <small *ngIf="candidateForm.get('firstName')?.invalid && candidateForm.get('firstName')?.touched"
+            class="error-message">
+            First name is required (min 2 characters)
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="lastName">Last name <span class="error-message">*</span></label>
+          <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="Last name"
+            (blur)="generateEmail()" class="form-input" />
+          <small *ngIf="candidateForm.get('lastName')?.invalid && candidateForm.get('lastName')?.touched"
+            class="error-message">
+            Last name is required (min 2 characters)
+          </small>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="phoneNumber">Phone Number <span class="error-message">*</span></label>
+        <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber" placeholder="Phone Number"
+          class="form-input" />
+        <small *ngIf="candidateForm.get('phoneNumber')?.invalid && candidateForm.get('phoneNumber')?.touched"
+          class="error-message">
+          Valid phone number is required
+        </small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field email-field">
+          <label for="email">Email <span class="error-message">*</span> </label>
+          <div class="email-input-container">
+            <input id="email" type="email" pInputText formControlName="email" placeholder="username@untitledui.com"
+              class="form-input" />
+            <!-- <p-button label="Generate" [text]="true" size="small" (onClick)="generateEmail()" class="generate-btn">
+            </p-button> -->
+          </div>
+          <small *ngIf="candidateForm.get('email')?.invalid && candidateForm.get('email')?.touched"
+            class="error-message">
+            Valid email is required
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="joiningDate">Joining date</label>
+          <p-calendar id="joiningDate" formControlName="joiningDate" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"
+            appendTo="body" [maxDate]="maxDate" [showIcon]="true" iconDisplay="input" class="form-input calendar-input">
+          </p-calendar>
+          <small *ngIf="candidateForm.get('joiningDate')?.invalid && candidateForm.get('joiningDate')?.touched"
+            class="error-message">
+            Joining date is required
+          </small>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Password <span class="error-message">*</span></label>
+        <input id="password" type="password" pInputText formControlName="password" placeholder="Password"
+          class="form-input" />
+        <small *ngIf="candidateForm.get('password')?.invalid && candidateForm.get('password')?.touched"
+          class="error-message">
+          Password is required (min 8 characters)
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword">Confirm Password <span class="error-message">*</span></label>
+        <input id="confirmPassword" type="password" pInputText formControlName="confirmPassword"
+          placeholder="Confirm Password" class="form-input" />
+        <small *ngIf="candidateForm.hasError('passwordsMismatch') && candidateForm.get('confirmPassword')?.touched"
+          class="error-message">
+          Passwords do not match
+        </small>
+      </div>
+
+    </div>
+
+    <!-- Step 2: Position Details -->
+    <div *ngIf="currentStep === 1" class="form-step">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="management">Management</label>
+          <p-dropdown id="management" formControlName="management" [options]="managementOptions" optionLabel="name"
+            optionValue="id" placeholder="Select management" class="form-input dropdown-input">
+          </p-dropdown>
+
+        </div>
+
+        <div class="form-field">
+          <label for="department">Select Department</label>
+          <p-dropdown id="department" formControlName="department" [options]="departmentOptions" optionLabel="name"
+            optionValue="id" placeholder="Select Department" class="form-input dropdown-input">
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="hierarchyLevel">Select Hierarchy Level<span class="error-message">*</span> </label>
+          <p-dropdown id="hierarchyLevel" formControlName="hierarchyLevel" [options]="hierarchyLevelOptions"
+            optionLabel="name" optionValue="id" placeholder="Select level" class="form-input dropdown-input">
+          </p-dropdown>
+          <small *ngIf="candidateForm.get('hierarchyLevel')?.invalid && candidateForm.get('hierarchyLevel')?.touched"
+            class="error-message">
+            Hierarchy level selection is required
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="position">Select Position<span class="error-message">*</span> </label>
+          <p-dropdown id="position" formControlName="position" [options]="positionOptions" optionLabel="name"
+            optionValue="id" placeholder="Select position" class="form-input dropdown-input">
+          </p-dropdown>
+          <small *ngIf="candidateForm.get('position')?.invalid && candidateForm.get('position')?.touched"
+            class="error-message">
+            Position selection is required
+          </small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="managerId">Manager</label>
+          <p-dropdown id="managerId" formControlName="managerId" [options]="candidateOptions" optionLabel="name"
+            optionValue="id" placeholder="Select Manager" class="form-input dropdown-input">
+          </p-dropdown>
+        </div>
+        <div class="form-field">
+          <label for="candidateStatus">Candidate Status<span class="error-message">*</span> </label>
+          <p-dropdown formControlName="candidateStatus" [options]="candidateStatusOptions" optionLabel="name"
+            optionValue="id" placeholder="Select status" class="form-input dropdown-input">
+          </p-dropdown>
+
+
+          <small *ngIf="candidateForm.get('candidateStatus')?.invalid && candidateForm.get('candidateStatus')?.touched"
+            class="error-message">
+            Status is required
+          </small>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="positionName">Position Name<span class="error-message">*</span> </label>
+          <input id="positionName" type="text" pInputText formControlName="positionName" placeholder="Position name"
+            optionLabel="name" optionValue="id" class="form-input" />
+          <small *ngIf="candidateForm.get('positionName')?.invalid && candidateForm.get('positionName')?.touched"
+            class="error-message">
+            Position name is required
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="positionName">Bio</label>
+          <input id="positionName" type="text" pInputText formControlName="bio" placeholder="Bio" optionLabel="name"
+            optionValue="id" class="form-input" />
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Step 3: Confirmation -->
+    <div *ngIf="currentStep === 2" class="form-step confirmation-step">
+
+      <div class="form-field mb-3">
+        <label class="mb-2 upload-label">Upload Image</label>
+        <div class="upload-box full-width" (click)="imageInput.click()" (drop)="onFileDrop($event)"
+          (dragover)="onDragOver($event)">
+          <input #imageInput type="file" accept="image/*" (change)="onImageUpload($event.target.files)" hidden />
+          <div class="upload-content">
+            <i class="pi pi-upload upload-icon"></i>
+            <p>
+              <span class="upload-link">Click to upload</span> or drag and drop
+            </p>
+            <small>SVG, PNG, JPG or GIF (max. 800×400px)</small>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="mt-3 text-center" *ngIf="images?.uploaded">
+          <img [src]="images.src" alt="Uploaded" class="rounded shadow" width="100" height="100" />
+          <div class="mt-1">
+            <i class="pi pi-trash" (click)="removeImage()" style="cursor: pointer; color: red; font-size: 16px;">
+            </i>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="form-field mb-3">
+        <label class="mb-2 upload-label">Upload Document</label>
+
+        <div class="upload-box full-width" (click)="docInput.click()" (drop)="onDocumentDrop($event)"
+          (dragover)="onDragOver($event)">
+
+          <input #docInput type="file" accept=".pdf,.doc,.docx" (change)="onDocumentUpload($event.target.files)" hidden
+            multiple />
+
+          <div class="upload-content">
+            <i class="pi pi-file upload-icon"></i>
+            <p>
+              <span class="upload-link">Click to upload</span> or drag and drop
+            </p>
+            <small>PDF, DOC, DOCX (max. 10MB per file)</small>
+          </div>
+        </div>
+
+        <!-- Preview list -->
+        <div class="mt-2">
+          <ul *ngIf="documents.length > 0" class="uploaded-documents-list ps-3">
+            <li *ngFor="let doc of documents; let i = index"
+              class="mb-1 d-flex align-items-center justify-content-between">
+              <a [href]="'https://20.164.23.26/' + doc.src" target="_blank" class="text-primary" download>
+                {{ doc.src.split('/').pop() }}
+              </a>
+              <i class="pi pi-trash" (click)="removeDocument(i)"
+                style="cursor: pointer; color: red; margin-left: 8px;"></i>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+
+
+      <!-- <div class="success-icon">
+        <i class="pi pi-check-circle"></i>
+      </div>
+      <h3 class="confirmation-title">Candidate Created Successfully</h3>
+      <p class="confirmation-message">
+        The candidate has been added to your system and is ready for review.
+      </p> -->
+    </div>
+  </form>
+
+  <!-- Dialog Footer -->
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <div class="footer-right">
+        <p-button *ngIf="currentStep > 0 && currentStep < 2" label="Back" [text]="true" severity="secondary"
+          (onClick)="previousStep()" class="back-btn">
+        </p-button>
+
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+        </p-button>
+
+        <p-button *ngIf="currentStep < 1" label="Next" severity="primary" [disabled]="!isCurrentStepValid()"
+          (onClick)="nextStep()" class="next-btn">
+        </p-button>
+
+        <!-- <p-button *ngIf="currentStep === 1" label="Next" severity="primary" [disabled]="!isCurrentStepValid()"
+          (onClick)="nextStep()" class="next-btn">
+        </p-button> -->
+
+        <p-button *ngIf="currentStep === 1" label="Save" severity="primary" type="button"
+          [disabled]="!candidateForm.valid" (onClick)="onSubmit()" class="save-btn">
+        </p-button>
+        <p-button *ngIf="showAttachSaveButton" label="Save Attachments" severity="success" (onClick)="saveAttachments()"
+          class="save-attachments-btn">
+        </p-button>
+
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

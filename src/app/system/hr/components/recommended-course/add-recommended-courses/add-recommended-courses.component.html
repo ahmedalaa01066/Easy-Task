@@ -1,0 +1,489 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    (onShow)="onDialogShow()" styleClass="add-candidate-dialog" header="Add New Course"
+    [style]="{ width: '700px', minHeight: '550px' }" (onHide)="onDialogHide()">
+
+    <!-- Steps Header -->
+    <div class="steps-container">
+        <div class="custom-steps">
+            <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 0"
+                [class.completed]="currentStep > 0">
+                <div class="step-indicator mb-0 me-2">
+                    <i *ngIf="currentStep > 0" class="pi pi-check"></i>
+                    <span *ngIf="currentStep === 0">1</span>
+                    <span *ngIf="currentStep < 0">1</span>
+                </div>
+                <p class="step-title mb-0">Create Main Info</p>
+            </div>
+
+            <div class="step-connector" [class.completed]="currentStep > 0"> <img src="assets/images/chevrons-right.svg"
+                    alt="chevron-right"></div>
+
+            <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 1"
+                [class.completed]="currentStep > 1">
+                <div class="step-indicator mb-0 me-2">
+                    <i *ngIf="currentStep > 1" class="pi pi-check"></i>
+                    <span *ngIf="currentStep === 1">2</span>
+                    <span *ngIf="currentStep < 1">2</span>
+                </div>
+                <p class="step-title mb-0">Additional Info</p>
+            </div>
+
+            <div class="step-connector" [class.completed]="currentStep > 1"> <img src="assets/images/chevrons-right.svg"
+                    alt="chevron-right"></div>
+
+            <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 2"
+                [class.completed]="currentStep > 2">
+                <div class="step-indicator mb-0 me-2">
+                    <i *ngIf="currentStep > 2" class="pi pi-check"></i>
+                    <span *ngIf="currentStep === 2">3</span>
+                    <span *ngIf="currentStep < 2">3</span>
+                </div>
+                <p class="step-title mb-0">Assign Management</p>
+            </div>
+
+
+            <div *ngIf="selectedTab === 'new'" class="step-item d-flex align-items-center flex-row"
+                [class.active]="currentStep >= 3" [class.completed]="currentStep > 3">
+                <div class="step-connector" [class.completed]="currentStep > 0"> <img
+                        src="assets/images/chevrons-right.svg" alt="chevron-right"></div>
+                <div class="step-indicator mb-0 me-2">
+                    <i *ngIf="currentStep > 3" class="pi pi-check"></i>
+                    <span *ngIf="currentStep === 3">4</span>
+                    <span *ngIf="currentStep < 3">4</span>
+                </div>
+
+                <p class="step-title mb-0">Documents</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="course-tabs d-flex m-4">
+        <button type="button" [class.active]="selectedTab === 'new'" (click)="selectTab('new')" class="tab-btn">
+            New Course
+        </button>
+        <button type="button" [class.active]="selectedTab === 'existing'" (click)="selectTab('existing')"
+            class="tab-btn">
+            Existing Course
+        </button>
+
+    </div>
+
+    <!-- Form Content -->
+    <div *ngIf="selectedTab === 'new'">
+        <form [formGroup]="courseForm" class="candidate-form">
+
+            <!-- Step 1: Create Main Info -->
+            <div *ngIf="currentStep === 0" class="form-step">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="name">Course name<span class="error-message">*</span></label>
+                        <input id="name" type="text" pInputText formControlName="name" placeholder="Course name"
+                            class="form-input" />
+                        <small *ngIf="courseForm.get('name')?.hasError('required') && courseForm.get('name')?.touched"
+                            class="error-message">
+                            Course name is required
+                        </small>
+
+                    </div>
+
+
+
+                    <div class="form-field">
+                        <label for="instructorName">Instructor Name<span class="error-message">*</span></label>
+                        <input id="instructorName" type="text" pInputText formControlName="instructorName"
+                            placeholder="Instructor Name" class="form-input" />
+                        <small
+                            *ngIf="courseForm.get('instructorName')?.hasError('required') && courseForm.get('instructorName')?.touched"
+                            class="error-message">
+                            Instructor name is required
+                        </small>
+
+                    </div>
+
+                    <!-- <div class="form-field">
+                        <label for="courseId">Course ID</label>
+                        <p-dropdown formControlName="courseId" [options]="existingCourses" optionLabel="name"
+                            optionValue="id" placeholder="Select Course" class="form-input dropdown-input">
+                        </p-dropdown>
+                    </div> -->
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-field">
+                        <label for="link">Course Link<span class="error-message">*</span></label>
+                        <input id="link" type="text" pInputText formControlName="link" placeholder="Course Link"
+                            class="form-input" />
+
+                        <small *ngIf="courseForm.get('link')?.touched">
+                            <span *ngIf="courseForm.get('link')?.hasError('required')" class="error-message">
+                                Course link is required
+                            </span>
+                            <span *ngIf="courseForm.get('link')?.hasError('pattern')" class="error-message">
+                                Please enter a valid link (e.g. https://example.com)
+                            </span>
+                        </small>
+
+
+                    </div>
+                    <div class="form-field">
+                        <label for="status">Course Status<span class="error-message">*</span></label>
+                        <p-dropdown id="status" formControlName="status" [options]="CourseStatus" optionLabel="name"
+                            optionValue="id" placeholder="Select Status" class="form-input dropdown-input">
+                        </p-dropdown>
+                        <small
+                            *ngIf="courseForm.get('status')?.hasError('required') && courseForm.get('status')?.touched"
+                            class="error-message">
+                            Course Status is required
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="startDate">Start date<span class="error-message">*</span></label>
+                        <p-calendar id="startDate" formControlName="startDate" placeholder="DD-MM-YYYY"
+                            dateFormat="dd-mm-yy" appendTo="body" [minDate]="today" [showIcon]="true"
+                            iconDisplay="input" class="form-input calendar-input">
+                        </p-calendar>
+                        <small *ngIf="courseForm.get('startDate')?.invalid && courseForm.get('startDate')?.touched"
+                            class="error-message">
+                            start date is required
+                        </small>
+                    </div>
+                    <div class="form-field">
+                        <label for="endDate">End date<span class="error-message">*</span></label>
+                        <p-calendar id="endDate" formControlName="endDate" placeholder="DD-MM-YYYY"
+                            dateFormat="dd-mm-yy" appendTo="body" [showIcon]="true" iconDisplay="input"
+                            class="form-input calendar-input">
+                        </p-calendar>
+                        <small *ngIf="courseForm.get('endDate')?.invalid && courseForm.get('endDate')?.touched"
+                            class="error-message">
+                            end date is required
+                        </small>
+                        <small
+                            *ngIf="courseForm.errors?.dateRangeInvalid && (courseForm.get('endDate')?.touched || courseForm.get('startDate')?.touched)"
+                            class="error-message">
+                            End date cannot be before start date
+                        </small>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Position Details -->
+            <div *ngIf="currentStep === 1" class="form-step">
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="hours">Course Hours Number<span class="error-message">*</span></label>
+                        <input id="hours" type="text" pInputText formControlName="hours" placeholder="Course Hours"
+                            optionLabel="name" optionValue="id" class="form-input" />
+                        <small *ngIf="courseForm.get('hours')?.hasError('required') && courseForm.get('hours')?.touched"
+                            class="error-message">
+                            Course hours are required
+                        </small>
+
+                    </div>
+
+                    <div class="form-field">
+                        <label for="courseClassification">Attendence Type<span class="error-message">*</span></label>
+                        <p-dropdown id="courseClassification" formControlName="courseClassification"
+                            [options]="CourseClassification" optionLabel="name" optionValue="id"
+                            placeholder="Select Type" class="form-input dropdown-input">
+                        </p-dropdown>
+                        <small
+                            *ngIf="courseForm.get('courseClassification')?.hasError('required') && courseForm.get('courseClassification')?.touched"
+                            class="error-message">
+                            Attendance type is required
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="courseType">Course Type<span class="error-message">*</span></label>
+                        <p-dropdown id="courseType" formControlName="courseType" [options]="CourseType"
+                            optionLabel="name" optionValue="id" placeholder="Select Type"
+                            class="form-input dropdown-input">
+                        </p-dropdown>
+                        <small
+                            *ngIf="courseForm.get('courseType')?.hasError('required') && courseForm.get('courseType')?.touched"
+                            class="error-message">
+                            Course type is required
+                        </small>
+
+                    </div>
+                    <div class="form-field">
+                        <label for="hasExam">Has Exam<span class="error-message">*</span></label>
+                        <p-dropdown formControlName="hasExam" [options]="HasExam" optionLabel="name" optionValue="id"
+                            placeholder="Select status" class="form-input dropdown-input">
+                        </p-dropdown>
+
+                        <small
+                            *ngIf="courseForm.get('hasExam')?.hasError('required') && courseForm.get('hasExam')?.touched"
+                            class="error-message">
+                            Course status is required
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="form-field" style="width: 100%;">
+                    <label for="content">Course Content<span class="error-message">*</span></label>
+                    <textarea id="content" pInputTextarea rows="9" formControlName="content"
+                        placeholder="Enter course content" class="form-input">
+      </textarea>
+                    <small *ngIf="courseForm.get('content')?.hasError('required') && courseForm.get('content')?.touched"
+                        class="error-message">
+                        Course status is required
+                    </small>
+
+                </div>
+
+
+            </div>
+
+            <!-- Step 3: Confirmation -->
+            <div *ngIf="currentStep === 2" class="form-step ">
+                <div class="form-row d-flex flex-column gap-3">
+                    <div class="form-field">
+                        <label for="managements">Select Management</label>
+                        <p-multiSelect formControlName="managements" [options]="managements" optionLabel="name"
+                            optionValue="id" placeholder="Select Management" display="chip"
+                            class="management-multiselect" [filter]="true" [showToggleAll]="false" appendTo="self">
+                            <ng-template let-option pTemplate="item">
+                                <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                                    {{ option.name }}
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+
+
+                    </div>
+
+
+                    <div class="form-field">
+                        <label for="departments">Select Departments</label>
+                        <p-multiSelect formControlName="departments" [options]="departments" optionLabel="name"
+                            optionValue="id" placeholder="Select department" display="chip"
+                            class="form-input dropdown-input w-100" [filter]="true" [showToggleAll]="false">
+                            <ng-template let-option pTemplate="item">
+                                <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                                    {{ option.name }}
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+
+                    </div>
+
+
+                </div>
+
+                <div class="form-field py-3" style="width: 100%;">
+                    <label for="candidateIds" style="display: block; ">Select Candidates<span
+                            class="error-message">*</span></label>
+                    <p-multiSelect formControlName="candidateIds" [options]="candidates" display="chip"
+                        optionLabel="name" optionValue="id" placeholder="Select Candidates" [filter]="true"
+                        [showToggleAll]="false" class="form-input dropdown-input w-100">
+                        <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                                {{ option.name }}
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+
+
+                </div>
+            </div>
+
+
+            <!-- Step 4: Documents -->
+            <div *ngIf="currentStep === 3" class="form-step">
+                <div class="form-field mb-3">
+                    <label for="docUpload">Upload Files<span class="error-message">*</span></label>
+
+                    <!-- Uploaded Documents Section -->
+                    <div *ngFor="let doc of documents; let i = index"
+                        class="uploaded-file-card p-3 d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="pi pi-file-pdf text-danger fs-3 me-2" *ngIf="doc.src.endsWith('.pdf')"></i>
+                            <i class="pi pi-image text-info fs-3 me-2" *ngIf="isImageFile(doc.src)"></i>
+
+                            <a [href]="'https://20.164.23.26/' + doc.src" target="_blank" class="file-name" download>
+                                {{ doc.src.split('/').pop() }}
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-light btn-sm" (click)="removeDocument(i)">
+                                <i class="pi pi-trash text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- Upload Box -->
+                    <div class="upload-box text-center p-4 border border-2 rounded" (drop)="onDrop($event)"
+                        (dragover)="onDragOver($event)">
+                        <i class="pi pi-upload fs-3 mb-2 d-block"></i>
+                        <label for="docUpload" class="click-to-upload cursor-pointer" style="color: #6941C6;">
+                            Click to upload
+                        </label>
+                        <span> or drag and drop</span>
+                        <p class="text-muted small mb-0">SVG, PNG, JPG or GIF (max. 800×400px)</p>
+                        <input #docInput type="file" id="docUpload" (change)="onDocumentUpload($event.target.files)"
+                            class="d-none" multiple />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+
+    <!-- Step 0: Select Course and Dates -->
+    <div *ngIf="selectedTab === 'existing' && currentStep === 0" class="form-step">
+        <form [formGroup]="courseForm" class="candidate-form">
+            <!-- Select Course -->
+            <div class="form-field">
+                <label for="courseId">Select Course<span class="error-message">*</span></label>
+                <p-dropdown formControlName="courseId" [options]="existingCourses" optionLabel="name" optionValue="id"
+                    placeholder="Select Course" class="form-input dropdown-input"
+                    [ngClass]="{'ng-invalid': !courseForm.get('courseId')?.value && courseForm.get('courseId')?.touched}"
+                    required></p-dropdown>
+
+                <small *ngIf="!courseForm.get('courseId')?.value && courseForm.get('courseId')?.touched"
+                    class="error-message">
+                    Course is required
+                </small>
+            </div>
+
+
+
+            <!-- Start and End Dates -->
+            <div class="form-row py-3">
+                <div class="form-field">
+                    <label for="startDate">Start date<span class="error-message">*</span></label>
+                    <p-calendar id="startDate" formControlName="startDate" placeholder="DD-MM-YYYY"
+                        dateFormat="dd-mm-yy" appendTo="body" [minDate]="today" [showIcon]="true" iconDisplay="input"
+                        class="form-input calendar-input">
+                    </p-calendar>
+                    <small *ngIf="courseForm.get('startDate')?.invalid && courseForm.get('startDate')?.touched"
+                        class="error-message">
+                        start date is required
+                    </small>
+                </div>
+
+                <div class="form-field">
+                    <label for="endDate">End date<span class="error-message">*</span></label>
+                    <p-calendar id="endDate" formControlName="endDate" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"
+                        appendTo="body" [showIcon]="true" iconDisplay="input" class="form-input calendar-input">
+                    </p-calendar>
+                    <small *ngIf="courseForm.get('endDate')?.invalid && courseForm.get('endDate')?.touched"
+                        class="error-message">
+                        end date is required
+                    </small>
+                    <small
+                        *ngIf="courseForm.errors?.dateRangeInvalid && (courseForm.get('endDate')?.touched || courseForm.get('startDate')?.touched)"
+                        class="error-message">
+                        End date cannot be before start date
+                    </small>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Step 2: Assign Management -->
+    <div *ngIf="selectedTab === 'existing' && currentStep === 2" class="form-step">
+        <form [formGroup]="courseForm" class="candidate-form">
+            <div class="form-row d-flex flex-column gap-3">
+                <div class="form-field">
+                    <label for="managements">Select Management</label>
+                    <p-multiSelect formControlName="managements" [options]="managements" optionLabel="name"
+                        optionValue="id" placeholder="Select Management" display="chip" class="management-multiselect"
+                        [filter]="true" [showToggleAll]="false" appendTo="self">
+                        <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                                {{ option.name }}
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+
+
+                </div>
+
+
+                <div class="form-field">
+                    <label for="departments">Select Departments</label>
+                    <p-multiSelect formControlName="departments" [options]="departments" optionLabel="name"
+                        optionValue="id" placeholder="Select department" display="chip"
+                        class="form-input dropdown-input w-100" [filter]="true" [showToggleAll]="false">
+                        <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                                {{ option.name }}
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+
+                </div>
+
+
+            </div>
+
+            <div class="form-field py-3" style="width: 100%;">
+                <label for="candidateIds" style="display: block; ">Select Candidates<span
+                        class="error-message">*</span></label>
+                <p-multiSelect formControlName="candidateIds" [options]="candidates" display="chip" optionLabel="name"
+                    optionValue="id" placeholder="Select Candidates" [filter]="true" [showToggleAll]="false"
+                    class="form-input dropdown-input w-100">
+                    <ng-template let-option pTemplate="item">
+                        <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                            {{ option.name }}
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+
+
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button *ngIf="currentStep > 0 " label="Back" [text]="true" severity="secondary"
+                    (onClick)="previousStep()" class="back-btn">
+                </p-button>
+
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+                </p-button>
+
+                <p-button *ngIf="currentStep < 2" label="Next" severity="primary" [disabled]="!isCurrentStepValid()"
+                    (onClick)="nextStep()" class="next-btn">
+                </p-button>
+
+
+
+                <p-button *ngIf="currentStep === 2" label="Save" severity="primary" (onClick)="onSubmit()"
+                    [disabled]="!isCurrentStepValid() || courseForm.invalid" class="save-btn">
+                </p-button>
+
+                <p-button *ngIf="selectedTab === 'new' && showAttachSaveButton"
+                    label="Save Attachment" severity="primary" (onClick)="saveAttachments()"
+                    class="save-attachment-btn">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

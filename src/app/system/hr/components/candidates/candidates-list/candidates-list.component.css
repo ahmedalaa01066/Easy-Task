@@ -1,0 +1,164 @@
+.candidates-table-container {
+  width: 100%;
+  max-width: 1136px;
+  min-width: 100%;
+}
+/* Table Header */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.options-button {
+  color: #6b7280;
+}
+
+/* Column Specific Styles */
+.candidate-col {
+  width: 280px;
+}
+
+.level-col {
+  width: 120px;
+}
+
+.manager-col {
+  width: 160px;
+}
+
+.position-col {
+  width: 200px;
+}
+
+.status-col {
+  width: 120px;
+}
+
+.date-col {
+  width: 140px;
+}
+
+/* Date Header with Sort Icon */
+.date-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sort-icon {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* Candidate Cell */
+.candidate-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-details {
+  display: flex;
+  flex-direction: row; /* يحط الاسم الأول والأخير جنب بعض */
+  gap: 4px; /* مسافة صغيرة بينهم */
+  align-items: center;
+}
+
+.candidate-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4DADC7;
+  line-height: 1.4;
+  cursor: pointer;
+
+  white-space: nowrap; /* يمنع النزول للسطر التاني */
+}
+
+.candidate-email {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* Other Cell Styles */
+.level-text,
+.manager-text,
+.position-text,
+.date-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #d1d5db;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .table-header {
+    padding: 16px 20px;
+  }
+
+  .candidate-col {
+    width: 240px;
+  }
+
+  .position-col {
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    padding: 12px 16px;
+  }
+
+  .table-title {
+    font-size: 16px;
+  }
+
+  .candidate-cell {
+    gap: 8px;
+  }
+
+  .candidate-email {
+    font-size: 13px;
+  }
+
+  .level-text,
+  .manager-text,
+  .position-text,
+  .date-text {
+    font-size: 13px;
+  }
+}
+
+

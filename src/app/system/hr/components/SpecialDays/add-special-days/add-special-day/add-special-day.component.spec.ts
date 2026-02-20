@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AddSpecialDayComponent } from './add-special-day.component';
+
+describe('AddSpecialDayComponent', () => {
+  let component: AddSpecialDayComponent;
+  let fixture: ComponentFixture<AddSpecialDayComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AddSpecialDayComponent]
+    });
+    fixture = TestBed.createComponent(AddSpecialDayComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

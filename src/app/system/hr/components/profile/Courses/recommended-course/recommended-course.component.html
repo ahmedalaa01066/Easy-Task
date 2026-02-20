@@ -1,0 +1,53 @@
+<p-dialog header="Recommended Course" [(visible)]="visible" [modal]="true" [style]="{width: '800px'}"
+    (onHide)="visibleChange.emit(false)">
+
+    <!-- كورسات -->
+    <div class="course-grid">
+        <div class="course-card" *ngFor="let course of courses">
+            <p-card>
+                <div class="course-title">{{ course.name }}</div>
+
+                <div class="course-details">
+                    <p><strong>Instructor:</strong> {{ course.instructorName }}</p>
+                    <p><strong>Hours:</strong> {{ course.hours }}</p>
+                    <p><strong>Start:</strong> {{ course.startDate | date }}</p>
+                    <p><strong>End:</strong> {{ course.endDate | date }}</p>
+                    <p><strong>Content:</strong> {{ course.content }}</p>
+                    <p><strong>Has Exam:</strong> {{ course.hasExam ? 'Yes' : 'No' }}</p>
+                    <p><strong>Course Type:</strong> {{ getCourseTypeName(course.courseType) }}</p>
+                    <p><strong>Classification:</strong> {{ getClassificationName(course.courseClassification) }}</p>
+                    <p><strong>Status:</strong> {{ getStatusName(course.status) }}</p>
+
+
+
+                    <button type="button" class="go-button" (click)="startCourse(course)"
+                        [disabled]="course.actualStartDate" [ngClass]="{ 'disabled-button': course.actualStartDate }">
+                        Start Now
+                    </button>
+
+                </div>
+            </p-card>
+        </div>
+    </div>
+
+    <div class="dialog-bottom">
+        <div class="pagination-controls-wrapper">
+            <div class="pagination-controls">
+                <button pButton type="button" label="Previous" class="nav-button" [disabled]="pageNumber === 1"
+                    (click)="goToPrevious()"></button>
+
+                <span class="page-info">Page {{ pageNumber }} of {{ totalPages }}</span>
+
+                <button pButton type="button" label="Next" class="nav-button" [disabled]="pageNumber === totalPages"
+                    (click)="goToNext()"></button>
+            </div>
+        </div>
+
+        <div class="cancel-wrapper">
+            <p-button type="button" label="Cancel" styleClass="cancel-button"
+                (click)="visibleChange.emit(false)"></p-button>
+        </div>
+    </div>
+
+
+</p-dialog>

@@ -1,0 +1,35 @@
+.candidates-page {
+  padding: 24px 32px;
+  background-color: #fdfdfd;
+  min-height: calc(100vh - 72px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #181d27;
+  margin: 0 0 8px 0;
+}
+
+@media (max-width: 768px) {
+  .candidates-page {
+    padding: 16px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+}

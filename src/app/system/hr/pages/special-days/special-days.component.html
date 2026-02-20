@@ -1,0 +1,32 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">Special Days</h1>
+                <p class="page-subtitle">View your special days</p>
+            </div>
+
+            <div class="action-buttons">
+                <p-button icon="pi pi-plus" label="Add Special Day" (onClick)="onAddSpecialDay()">
+                </p-button>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-management mb-4 position-relative w-50">
+            <i class="pi pi-search search-icon"></i>
+            <input type="text" placeholder="Search for special day" [(ngModel)]="searchTerm"
+                class="form-control ps-5" />
+        </div>
+    </div>
+
+    <div class="page-content">
+        <app-special-days-list [searchTerm]="searchTerm"
+            (editSpecialDay)="onEditSpecialDay($event)"></app-special-days-list>
+    </div>
+    <!-- Add Candidate Modal -->
+    <app-add-special-day [(visible)]="showAddSpecialDayModal" [editId]="editId"
+        (specialDayAdded)="onSpecialDaysAdded($event)">
+    </app-add-special-day>
+</div>

@@ -1,0 +1,539 @@
+.candidates-page {
+  padding: 24px 32px;
+  background-color: #fdfdfd;
+  min-height: calc(100vh - 72px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #181d27;
+  margin: 0 0 8px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidates-page {
+    padding: 16px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+}
+.search-wrapper input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 14px;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+/* Assign Button */
+.assginCandidate-btn {
+  background-color: #3aa9c7 !important;
+  color: #fff !important;
+  border: 1px solid #3aa9c7 !important;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.shift-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #535862;
+  line-height: 20px;
+}
+.page-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2px 24px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-top: 8px;
+}
+
+.config-options {
+  display: flex;
+  flex-direction: column; /* نخلي العناصر تحت بعض */
+  gap: 12px;
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 24px;
+}
+.config-header {
+  display: flex;
+  align-items: flex-start; /* علشان النصوص تبدأ من فوق */
+  gap: 8px;
+}
+
+.config-header-text {
+  display: flex;
+  flex-direction: column; /* يحط العنوان فوق والسابتايتل تحته */
+  line-height: 1.4;
+}
+
+.config-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+
+.checkboxes {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-left: 0px; /* علشان يبدأوا تحت العنوان */
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+
+/* Form Styles */
+.candidate-form {
+  padding: 16px 0;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #414651;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  height: 40px;
+  color: #111827;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #6941c6;
+  box-shadow: 0 0 0 3px rgba(105, 65, 198, 0.1);
+}
+
+/* Error Messages */
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+}
+.switch {
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.switch .slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* لما الـ switch on */
+.switch.on {
+  background-color: #12a0c7;
+}
+
+.switch.on .slider {
+  transform: translateX(25px);
+}
+.candidates-page {
+  padding: 24px 32px;
+  background-color: #fdfdfd;
+  min-height: calc(100vh - 72px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #181d27;
+  margin: 0 0 8px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidates-page {
+    padding: 16px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+}
+.search-wrapper input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 14px;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+/* Assign Button */
+.assginCandidate-btn {
+  background-color: #3aa9c7 !important;
+  color: #fff !important;
+  border: 1px solid #3aa9c7 !important;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.shift-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #535862;
+  line-height: 20px;
+}
+.page-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2px 24px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-top: 8px;
+}
+
+.config-options {
+  display: flex;
+  flex-direction: column; /* نخلي العناصر تحت بعض */
+  gap: 12px;
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 24px;
+}
+.config-header {
+  display: flex;
+  align-items: flex-start; /* علشان النصوص تبدأ من فوق */
+  gap: 8px;
+}
+
+.config-header-text {
+  display: flex;
+  flex-direction: column; /* يحط العنوان فوق والسابتايتل تحته */
+  line-height: 1.4;
+}
+
+.config-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+
+.checkboxes {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-left: 0px; /* علشان يبدأوا تحت العنوان */
+}
+
+
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+
+/* Form Styles */
+.candidate-form {
+  padding: 16px 0;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #414651;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  height: 40px;
+  color: #111827;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #12a0c7;
+  box-shadow: 0 0 0 3px rgba(105, 65, 198, 0.1);
+}
+
+/* Error Messages */
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 640px) {
+}
+.switch {
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.switch .slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* لما الـ switch on */
+.switch.on {
+  background-color: #12a0c7;
+}
+
+.switch.on .slider {
+  transform: translateX(25px);
+} /* Input الداخلي للـ calendar */
+
+
+/* ترتيب From & To Time بجنب بعض */
+.form-row {
+  display: flex;
+  gap: 5px; /* المسافة بين الخانات */
+}
+
+.flex-item {
+  flex: 1; /* يخلي كل خانة تاخد نفس العرض */
+}
+@media (max-width: 640px) {
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+
+.remaining-count {
+  color: #4DADC7;
+  font-weight: 600; /* لو عايزة يبان أوضح */
+}
+
+.pagination-wrapper .page-btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #cfd8e3;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination-wrapper .page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-wrapper .page-btn:hover:not(:disabled) {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between; /* عناصر اليسار واليمين منفصلة */
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  font-size: 14px;
+  color: #555;
+}
+
+/* النص على الشمال */
+.pagination-wrapper .page-info {
+  text-align: left;
+}
+
+/* الزراير على اليمين */
+.pagination-wrapper .page-controls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pagination-wrapper .page-btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #cfd8e3;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination-wrapper .page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-wrapper .page-btn:hover:not(:disabled) {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}

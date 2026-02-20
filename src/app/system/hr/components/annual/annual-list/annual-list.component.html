@@ -1,0 +1,75 @@
+<div class="candidates-table-container">
+    <!-- Table Header -->
+    <div class="table-header">
+        <h3 class="table-title">All annuals</h3>
+    </div>
+
+    <!-- Data Table -->
+    <p-table [value]="pagedAnnuals" [scrollable]="true" scrollHeight="600px" [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="candidates-table">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Annual Type</th>
+                <th>Maximum Requests</th>
+                <th>Confirmation Layer</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-annual>
+            <tr>
+                <td>{{ annual.name }}</td>
+                <td>{{ annual.maxRequestNum }}</td>
+                <td>{{ annual.confirmationLayerNum }}</td>
+
+                <td>
+                    <img class="mx-2" style="width: 20px;" src="../../../../../assets/images/edit.png"
+                        (click)="editRequestType(annual)">
+                    <img class="mx-2 " src="../../../../../../assets/images/trash-3.png"
+                        (click)="showDeleteConfirmation(annual)">
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3" class="empty-message">No Annuals found</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Custom Pagination -->
+    <div class="pagination-wrapper">
+        <span class="page-info">
+            Page {{ pageIndex }} of {{ totalPages }}
+        </span>
+        <div class="page-controls">
+            <button class="page-btn" (click)="Previous()" [disabled]="pageIndex === 1">
+                Previous
+            </button>
+            <button class="page-btn" (click)="Next()" [disabled]="pageIndex === totalPages">
+                Next
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Delete Conirmation -->
+
+<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [closable]="false" [style]="{ width: '500px' }"
+   >
+   <div class="delIcon">
+    <img src="../../../../../../assets/images/Frame 248.png">
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <p>Are you sure you want to delete <strong>{{ selectedItem?.name }}</strong>?</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex justify-content-center gap-2">
+            <p-button label="Cancel" class="cancel-btn"
+                (click)="showDeleteDialog = false"></p-button>
+            <p-button label="Delete" styleClass="confirm-button" (onClick)="deleteRequestType()"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>

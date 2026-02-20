@@ -1,0 +1,24 @@
+<div class="kpis-scroll">
+  <div *ngFor="let k of kpis; trackBy: trackByIndex" class="item-row">
+    <div class="item-left">
+      <div class="item-text">
+
+        <div class="item-header">
+          <div class="item-title">{{ k.kpiName }}</div>
+          <div class="item-type">{{ getTypeName(k.kpiType) }}</div>
+        </div>
+
+        <div class="item-sub">
+          {{ k.updatedDate | date: 'yyyy-MM-dd' }}
+        </div>
+
+        <!-- ✅ percentage -->
+        <p-progressBar [value]="k.percentage" [showValue]="true" [styleClass]="
+    k.percentage > 70 ? 'progress-green' : 
+    (k.percentage >= 40 ? 'progress-blue' : 'progress-red')
+  ">
+        </p-progressBar>
+      </div>
+    </div>
+  </div>
+</div>

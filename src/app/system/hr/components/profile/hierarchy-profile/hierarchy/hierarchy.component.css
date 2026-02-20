@@ -1,0 +1,38 @@
+/* ===== Hierarchy Section ===== */
+.hierarchy {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+}
+
+@media (min-width: 768px) {
+    .hierarchy {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.member {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: #FAFAFA;
+    padding: .75rem;
+    border-radius: 12px;
+    border: 1px solid #eef2f7;
+}
+
+.member-icon {
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+
+.member-name {
+    font-weight: 500;
+    color: #000000;
+}
+
+.member-level {
+    color: #000000;
+    font-size: 15px;
+}

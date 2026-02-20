@@ -1,0 +1,56 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Edit Course" [style]="{ width: '600px', minHeight: '400px' }"
+    (onHide)="closeDialog()">
+
+
+    <!-- Form Content -->
+    <form [formGroup]="editCourseForm" class="candidate-form">
+        <div class="form-row two-columns">
+            <div class="form-field">
+                <label for="instructorName">Instructor name <span class="error-message">*</span></label>
+                <input id="instructorName" type="text" pInputText formControlName="instructorName"
+                    placeholder="Instructor Name" class="form-input" />
+                <small
+                    *ngIf="editCourseForm.get('instructorName')?.invalid && editCourseForm.get('instructorName')?.touched"
+                    class="error-message">
+                    Instructor name is required (min 2 characters)
+                </small>
+            </div>
+
+            <div class="form-field">
+                <label for="hours">Number of Hours <span class="error-message">*</span></label>
+                <input id="hours" type="text" pInputText formControlName="hours" placeholder="Number of Hours"
+                    class="form-input" />
+                <small *ngIf="editCourseForm.get('hours')?.invalid && editCourseForm.get('hours')?.touched"
+                    class="error-message">
+                    Number of Hours is required
+                </small>
+            </div>
+        </div>
+        <div class="form-field py-4" style="width: 100%;">
+            <label for="content">Course Content<span class="error-message">*</span></label>
+            <textarea id="content" pInputTextarea rows="9" formControlName="content" placeholder="Enter course content"
+                class="form-input">
+      </textarea>
+            <small *ngIf="editCourseForm.get('content')?.hasError('required') && editCourseForm.get('content')?.touched"
+                class="error-message">
+                Course status is required
+            </small>
+
+        </div>
+
+    </form>
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+                </p-button>
+
+                <p-button label="Save"  (click)="onSave()" class="save-btn">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

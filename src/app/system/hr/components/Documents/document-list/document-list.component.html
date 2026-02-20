@@ -1,0 +1,147 @@
+<div class="breadcrumb">
+  <ng-container *ngFor="let part of breadcrumbPath; let i = index; let last = last">
+    <span class="breadcrumb-part" (click)="onBreadcrumbClick(i)" [class.clickable]="!last">
+      {{ part }}
+    </span>
+    <span *ngIf="!last"> &gt; </span>
+  </ng-container>
+</div>
+
+
+<div class="documents-section">
+  <!-- زرار Back -->
+  <!-- <div *ngIf="canGoBack()" class="top-bar">
+    <button (click)="goBack()" class="back-btn"> Back</button>
+  </div> -->
+
+  <!-- عرض static items -->
+  <div class="documents-grid" *ngIf="viewMode === 'root'">
+    <div *ngFor="let doc of DocumentType" class="doc-card" (click)="openBySourceType(doc)">
+      <div class="doc-content">
+        <div class="icon-circle">
+          <img src="/assets/images/folder (1).png" alt="folder" class="w-5 h-5" />
+        </div>
+        <div class="doc-texts">
+          <span class="title">{{ doc.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- عرض الفولدرات -->
+  <!-- عرض الفولدرات -->
+  <div *ngIf="viewMode === 'list' || viewMode === 'sublist'">
+
+    <!-- زرار Add Folder (يظهر بس لو مفيش فولدر مفتوح) -->
+    <div class="add-folder-container" *ngIf="viewMode == 'sublist' && isFolderView">
+      <button pButton type="button" label="Add New Folder" class="add-document-btn" icon="pi pi-folder"
+        (click)="openAddFolderDialog()"></button>
+    </div>
+
+    <!-- شبكة عرض الفولدرات -->
+    <div class="documents-grid">
+      <div *ngFor="let doc of currentDocuments" class="doc-card"
+        (click)="doc.isFolder ? openFolderDialog(doc) : openFileDialog(doc)">
+        <div class="doc-content">
+          <div class="icon-circle">
+            <img src="/assets/images/folder (1).png" alt="folder" class="w-5 h-5" />
+          </div>
+          <div class="doc-texts">
+            <span class="title">{{ doc.name }}</span>
+            <span class="subtitle">{{ doc.count }} Items</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- الملفات -->
+  <div  *ngIf="folderFiles.length > 0 || selectedFolderId" class="files-list">
+    <div class="documents-style" *ngIf="isFileView">
+      <!-- زرار Add Document -->
+      <button pButton type="button" label="Add Document" (click)="openUploadDialog()" class="add-document-btn"></button>
+    </div>
+
+    <div *ngFor="let file of folderFiles" class="file-row dialogFile-style">
+      <img src="/assets/images/folder (1).png" alt="folder" class="folder-icon" />
+      <span style="flex-grow: 1;">{{ file.name }}</span>
+
+      <div class="file-actions" style="display: flex; gap: 8px;">
+        <button class="icon-btn delete" (click)="deleteFile(file)">
+          <img src="/assets/images/divide-square (1).png" alt="Delete" />
+        </button>
+
+        <button class="icon-btn edit" (click)="downloadFile(file)">
+          <img src="/assets/images/download.png" alt="Download" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p-dialog [(visible)]="uploadDialogVisible" [modal]="true" [closable]="true" [style]="{width: '600px'}"
+  header="Upload new file" (onHide)="closeUploadDialog()">
+
+  <div *ngFor="let file of dialogFiles; let i = index" class="uploaded-file-row">
+    <div class="file-left">
+      <img *ngIf="isImage(file)" src="/assets/images/folder (1).png" class="preview-img" />
+      <img *ngIf="!isImage(file)" src="/assets/images/folder (1).png" class="file-icon" />
+
+      <span class="file-name">{{ file.name }}</span>
+    </div>
+
+    <div class="file-actions">
+      <button class="icon-btn delete" (click)="deleteFileInDialog(i)">
+        <img src="/assets/images/divide-square (1).png" alt="Delete" />
+      </button>
+    </div>
+  </div>
+
+
+  <!-- صندوق رفع فايل جديد -->
+  <div class="upload-box" (dragover)="onDragOver($event)" (drop)="onFileDrop($event)">
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+    <img src="/assets/images/Icon.png" class="py-2" />
+    <p><a (click)="triggerFileInput($event)">Click to upload</a> or drag and drop</p>
+    <p>
+      <small>SVG, PNG, JPG or GIF (max. 800×400px)</small>
+  </div>
+
+
+  <!-- Add new file -->
+  <!-- <div class="add-file">
+    <a (click)="triggerFileInput($event)">
+      <i class="pi pi-plus-circle"></i> Add new File
+    </a>
+  </div> -->
+
+  <!-- Footer -->
+  <div class="dialog-footer">
+    <button pButton label="Cancel" class="cancel-button" (click)="closeUploadDialog()"></button>
+    <button pButton label="Save" class="save-button" (click)="saveUploadedFiles()"></button>
+  </div>
+</p-dialog>
+
+
+
+<p-dialog [(visible)]="addFolderDialogVisible" [modal]="true" [closable]="true" [style]="{ width: '600px' }"
+  header="Add new folder" (onHide)="closeAddFolderDialog()">
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="folderName">Folder Name<span class="error-message">*</span></label>
+      <input id="folderName" type="text" pInputText [(ngModel)]="newFolderName"  (blur)="isTouched = true" placeholder="Folder name"
+        class="form-input" name="folderName" />
+      <small *ngIf="!newFolderName && isTouched" class="error-message">
+        Folder name is required
+      </small>
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button pButton label="Cancel" class="cancel-button" (click)="closeAddFolderDialog()"></button>
+    <button pButton label="Save" class="save-button" (click)="saveNewFolder()"></button>
+  </div>
+</p-dialog>

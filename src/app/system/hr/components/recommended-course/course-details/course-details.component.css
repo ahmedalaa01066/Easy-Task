@@ -1,0 +1,200 @@
+.candidates-page {
+  padding: 24px 32px;
+  background-color: #fdfdfd;
+  min-height: calc(100vh - 72px);
+}
+
+/* Header Section */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #181d27;
+  margin: 0 0 8px 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Buttons */
+.btnEdit {
+  color: #12A0C7;
+  background-color: #CBF4FF;
+}
+
+.imgDelete {
+  background-color: #fef3f2;
+  border-radius: 4px;
+  border: 1px solid #fecdca;
+}
+
+.addCandidate {
+  background-color: #12A0C7;
+  color: white;
+}
+
+.count-badge {
+  background-color: #CBF4FF;
+  border: 1px solid #CBF4FF;
+  border-radius: 41px;
+}
+
+/* Course Info Section */
+.course-info {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.course-info .info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.course-info .icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #A7E2F2;
+  border: 1px solid #A7E2F2;
+}
+
+.course-info .info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-info .label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #717680;
+}
+
+.course-info .value {
+  font-size: 15px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.course-info .value.link a {
+  color: #12A0C7;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.course-info .value.link a:hover {
+  text-decoration: underline;
+}
+
+/* Table Container */
+.candidates-table-container {
+  width: 100%;
+  max-width: 1136px;
+}
+
+/* Table Header */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title,
+h5 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* Candidate Cell */
+.candidate-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.candidate-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #12A0C7;
+}
+
+.candidate-email {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Manager Text */
+.manager-text {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #d1d5db;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .table-header {
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    padding: 12px 16px;
+  }
+
+  h5 {
+    font-size: 16px;
+  }
+
+  .candidate-email {
+    font-size: 13px;
+  }
+
+  .manager-text {
+    font-size: 13px;
+  }
+}
+.page-subtitle{
+  color: #535862;
+}

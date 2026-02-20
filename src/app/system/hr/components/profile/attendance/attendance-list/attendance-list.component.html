@@ -1,0 +1,94 @@
+<p-card class="panel">
+    <div class="panel-header">
+        <span class="name">Week Attendance</span>
+        <button pButton class="p-button-outlined p-button-sm" type="button" label="Filter Duration"
+            (click)="openFilterDialog()"></button>
+
+    </div>
+    <p-dialog [(visible)]="showFilterDialog" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+        styleClass="add-candidate-dialog" header="Filter Attendance" [style]="{ width: '600px' }">
+
+        <!-- Quick Buttons -->
+        <div class="quick-buttons" style="display:flex; gap:10px; margin-bottom:16px;">
+            <p-button label="Last Week" (onClick)="setQuickPeriod('lastWeek')" class="quick-btn"></p-button>
+            <p-button label="This Week" (onClick)="setQuickPeriod('thisWeek')" class="quick-btn"></p-button>
+            <p-button label="Last 2 Weeks" (onClick)="setQuickPeriod('last2Weeks')" class="quick-btn"></p-button>
+
+        </div>
+
+        <!-- Calendar Inputs Side by Side -->
+        <form class="candidate-form" style="display:flex; gap:16px; align-items:flex-start;">
+            <div class="form-field calendar-input" [ngClass]="{'disabled-div': inputsDisabled}" style="flex:1;">
+                <label>From Date</label>
+                <div style="position:relative; display:inline-block;">
+                    <p-calendar [(ngModel)]="fromDate" name="fromDate" placeholder="dd/mm/yy" dateFormat="dd/mm/yy"
+                        [showIcon]="false" inputId="fromDateInput">
+                    </p-calendar>
+                    <i class="pi pi-calendar"
+                        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); pointer-events:none; color:#495057;"></i>
+                </div>
+                <div *ngIf="fromDate && toDate && fromDate > toDate" style="color:red; font-size:12px;">
+                    From Date cannot be after To Date
+                </div>
+            </div>
+
+            <div class="form-field calendar-input" [ngClass]="{'disabled-div': inputsDisabled}" style="flex:1;">
+                <label>To Date</label>
+                <div style="position:relative; display:inline-block;">
+                    <p-calendar [(ngModel)]="toDate" name="toDate" placeholder="dd/mm/yy" dateFormat="dd/mm/yy"
+                        [showIcon]="false" inputId="fromDateInput">
+                    </p-calendar>
+                    <i class="pi pi-calendar"
+                        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); pointer-events:none; color:#495057;"></i>
+                </div>
+                <div *ngIf="fromDate && toDate && fromDate > toDate" style="color:red; font-size:12px;">
+                    To Date cannot be before From Date
+                </div>
+            </div>
+        </form>
+
+        <!-- Dialog Footer -->
+        <ng-template pTemplate="footer">
+            <div class="dialog-footer">
+                <div class="footer-right">
+                    <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancelFilter()"
+                        class="cancel-btn"></p-button>
+
+                    <p-button label="Apply" (onClick)="applyFilter()" class="save-btn"
+                        [disabled]="fromDate && toDate && fromDate > toDate">
+                    </p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-dialog>
+    <div class="table-wrapper">
+        <p-table [value]="attendance" [scrollable]="attendance.length > 7"
+            [scrollHeight]="attendance.length > 7 ? '400px' : null" styleClass="att-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Duration</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr>
+                    <td>{{ getDayName(row.actualStartDate) }}</td>
+                    <td>{{ convertTo12HourFormat(row.fromTime) }}</td>
+                    <td>{{ convertTo12HourFormat(row.toTime) }}</td>
+                    <td>{{ getDuration(row.fromTime, row.toTime) }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="pagination-wrapper">
+        <span class="page-info">Page {{ pageNumber }} of {{ totalPages }}</span>
+        <div class="page-controls">
+            <button class="page-btn" (click)="goToPrevious()" [disabled]="pageNumber === 1">Previous</button>
+            <button class="page-btn" (click)="goToNext()" [disabled]="pageNumber >= totalPages">Next</button>
+        </div>
+    </div>
+
+</p-card>

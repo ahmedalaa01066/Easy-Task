@@ -1,0 +1,54 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Create New Position" [style]="{ width: '600px', height: '400px' }"
+    (onHide)="onDialogHide()">
+
+    <!-- Form Content -->
+    <form [formGroup]="positionForm" class="candidate-form">
+
+
+
+        <!-- Job Name + Management in one row -->
+        <div class="form-row my-2">
+            <!-- Job Name -->
+
+            <div class="form-field">
+                <label for="jobName">Job Name<span class="error-message">*</span></label>
+                <input id="jobName" type="text" pInputText formControlName="name" placeholder="Enter Job Name"
+                    class="form-input" />
+                <small *ngIf="positionForm.get('name')?.invalid && positionForm.get('name')?.touched"
+                    class="error-message">Job Name is required</small>
+            </div>
+            <!-- Management -->
+            <div class="form-field dropdown-input">
+                <label for="management">Management<span class="error-message">*</span></label>
+                <p-dropdown id="management" [options]="managements" formControlName="managementId" optionLabel="name"
+                    optionValue="id" placeholder="Select Management" [appendTo]="'body'">
+                </p-dropdown>
+
+                <small *ngIf="positionForm.get('managementId')?.invalid && positionForm.get('managementId')?.touched"
+                    class="error-message">Management is required</small>
+            </div>
+
+        </div>
+
+        <!-- Description -->
+        <div class="form-field">
+            <label for="description">Description<span class="error-message">*</span></label>
+            <textarea id="description" rows="3" pInputTextarea formControlName="description"
+                placeholder="Enter Description" class="form-input"></textarea>
+        </div>
+    </form>
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+                </p-button>
+
+                <p-button label="Save" (onClick)="onSubmit()" [disabled]="positionForm.invalid" class="save-btn">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

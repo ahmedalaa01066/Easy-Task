@@ -1,0 +1,31 @@
+<div class="candidates-page">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">Request Notification</h1>
+        <p class="page-subtitle">View your request</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <p-tabMenu [model]="tabItems" [activeItem]="activeItem">
+      <ng-template pTemplate="item" let-item>
+        <a class="p-menuitem-link">
+          <span>{{ item.label }}</span>
+        </a>
+      </ng-template>
+    </p-tabMenu>
+  </div>
+
+  <!-- Content Section -->
+  <div class="page-content">
+    <!-- ✅ نمرر المتغير الجديد هنا -->
+    <app-all-request
+      [activeTab]="activeTab"
+      [isSpecial]="isSpecial">
+    </app-all-request>
+  </div>
+</div>

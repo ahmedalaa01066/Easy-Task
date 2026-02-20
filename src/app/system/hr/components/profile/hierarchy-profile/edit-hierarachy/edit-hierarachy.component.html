@@ -1,0 +1,29 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+  styleClass="add-candidate-dialog" header="Edit Hierarchy Level" [style]="{ width: '600px' }">
+  <form [formGroup]="hierarchyForm" class="candidate-form">
+    <div class="form-field">
+      <label for="level">Level <span class="error-message">*</span></label>
+      <p-dropdown 
+  [options]="levels"
+  formControlName="levelId"   
+  optionLabel="label"
+  optionValue="value"
+  class="w-full">
+</p-dropdown>
+
+      <small *ngIf="hierarchyForm.get('levelId')?.invalid && hierarchyForm.get('levelId')?.touched"
+        class="error-message">
+        Please select a level
+      </small>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <div class="footer-right">
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn"></p-button>
+        <p-button label="Save" severity="primary" (onClick)="onSubmit()" class="save-btn"></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

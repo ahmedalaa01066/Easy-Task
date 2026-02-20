@@ -1,0 +1,213 @@
+<div class="candidates-table-container">
+  <!-- Table Header -->
+  <div class="table-header">
+    <h3 class="table-title">All Courses</h3>
+  </div>
+
+  <!-- Data Table -->
+  <p-table [value]="courses" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [first]="first"
+    responsiveLayout="stack" (onPage)="onPageChange($event)" [scrollable]="true" scrollHeight="600px"
+    [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" styleClass="candidates-table">
+    <!-- All Candidates Column -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th id="candidate-col">All Courses</th>
+        <th id="level-col">Assigned Management</th>
+        <th id="manager-col">Assigned Employees</th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-course>
+      <tr>
+        <td class="candidate-info" [routerLink]="['/hr/recommendedCourses/courseDetails', course.id]"
+          style="cursor: pointer;">
+          <div class="candidate-cell">
+            <div class="candidate-details">
+              <div class="candidate-name">{{ course.name }}</div>
+            </div>
+          </div>
+        </td>
+
+
+        <td id="assignedManagements-cell">
+          <span class="level-text text-nowrap" style="cursor: pointer" (click)="showManagementPopup(course)">
+            <ng-container *ngIf="getManagementNamesParts(course.assignedManagements) as parts">
+              {{ parts.names }}
+              <ng-container *ngIf="parts.extraCount > 0">
+                , <span class="management-count">+{{ parts.extraCount }}</span>
+              </ng-container>
+            </ng-container>
+          </span>
+        </td>
+
+        <td id="numOfCandidates-cell" (click)="showCandidatesForCourse">
+          <span (click)="showCandidatesForCourse(course)" style="cursor: pointer" class="numOfCandidates-cell caro">{{
+            course.numOfCandidates + ' Employees' }}</span>
+        </td>
+
+
+        <td>
+          <!-- <img class="mx-2" src="../../../../../assets/images/edit.png" (click)="editCourse()"> -->
+          <img src="../../../../../assets/images/trash.png" (click)="showDeleteConfirmation(course)">
+        </td>
+      </tr>
+    </ng-template>
+
+
+    <!-- Empty State -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="100%" class="empty-message">
+          <div class="empty-state">
+            <i class="pi pi-users empty-icon"></i>
+            <p>No Courses found</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Delete Conirmation -->
+<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [closable]="false" [style]="{ width: '500px' }">
+  <div class="delIcon">
+    <img src="../../../../../../assets/images/Frame 248.png">
+  </div>
+  <div class="d-flex justify-content-center mt-2">
+    <p>Are you sure you want to delete <strong>{{ selectedItem?.name }}</strong>?</p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center gap-2">
+      <p-button type="button" label="Cancel" styleClass="cancel-button" (click)="showDeleteDialog = false"></p-button>
+      <p-button type="button" label="Delete" styleClass="confirm-button" (click)="deleteCourse()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+
+
+<!-- managementPopupVisible -->
+<p-dialog [(visible)]="managementPopupVisible" [modal]="true" [style]="{ width: '600px' }" [closable]="true"
+  [dismissableMask]="true">
+
+  <ng-template pTemplate="header">
+    <div class="d-flex flex-column w-100">
+      <div class="fw-semibold fs-5">Managements</div>
+      <div class="dialog-header-divider w-100"></div>
+    </div>
+  </ng-template>
+
+  <ul class="p-0 m-0 list-unstyled mt-0 mb-4">
+    <li *ngFor="let item of managementPopupList"
+      class="management-item d-flex justify-content-between align-items-center px-3 py-2 mb-2">
+      <span>{{ item.name }}</span>
+      <img src="../../../../../assets/images/Delete.png" style="cursor: pointer"
+        (click)="onRemoveManagement(item, selectedItem?.id!)" />
+    </li>
+  </ul>
+
+
+  <div class="dialog-footer-divider"></div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end gap-2">
+      <p-button type="button" label="Cancel" styleClass="cancel-button"
+        (click)="managementPopupVisible = false"></p-button>
+      <p-button type="button" label="Save" styleClass="p-button-primary" (click)="onSaveManagementChanges()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- unAssginmanagement -->
+<p-dialog [(visible)]="confirmUnassignDialogVisible" [modal]="true" [closable]="false" [dismissableMask]="true"
+  [style]="{ width: '600px' }" styleClass="custom-confirm-dialog">
+
+  <div class="text-center px-4 pt-4 pb-2">
+    <img src="../../../../../assets/images/Frame 248.png" width="40" class="mb-3" />
+    <p class="mb-2">
+      Do you want to Unassign this course for hr management?
+    </p>
+    <p class="text-muted small">If you confirm, it will unassign it for the employees also.</p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center gap-3 pb-3">
+      <p-button type="button" label="Cancel" styleClass="cancel-button"
+        (click)="confirmUnassignDialogVisible = false"></p-button>
+      <p-button type="button" label="Confirm" styleClass="confirm-button"
+        (click)="confirmUnassignManagements()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Candidates Dialog -->
+<p-dialog [(visible)]="candidatesDialogVisible" [modal]="true" [style]="{ width: '600px' }" [closable]="true"
+  [dismissableMask]="true">
+
+  <ng-template pTemplate="header">
+    <div class="d-flex flex-column w-100">
+      <div class="fw-semibold fs-5">Employees</div>
+      <div class="dialog-header-divider w-100"></div>
+    </div>
+  </ng-template>
+  <div *ngIf="loadingCandidates" class="text-center py-4">
+    <i class="pi pi-spin pi-spinner fs-4"></i>
+  </div>
+
+  <ul *ngIf="!loadingCandidates && candidatesList.length > 0" class="list-unstyled">
+    <li *ngFor="let candidate of candidatesList"
+      class="management-item d-flex justify-content-between align-items-center px-3 py-2 mb-2">
+      <div class="candidate-cell">
+        <p-avatar [image]="candidate.path ? environment.api + '/' + candidate.path : undefined"
+          [label]="!candidate.path ? getInitialsFromFullName(candidate.candidateName) : undefined" size="normal"
+          shape="circle" [style]="{'background-color': '#F9F5FF', 'color': '#7F56D9'}">
+        </p-avatar>
+        <div class="candidate-details">
+          <span style="color: black; ">{{ candidate.candidateName }}</span><br />
+          <span class="small-Email">{{ candidate.candidateEmail }}</span>
+        </div>
+      </div>
+
+      <img src="../../../../../assets/images/Delete.png" style="cursor: pointer"
+        (click)="onRemoveCandidate(candidate)" />
+    </li>
+  </ul>
+
+
+
+  <div class="dialog-footer-divider"></div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end gap-2">
+      <p-button type="button" label="Cancel" styleClass="cancel-button"
+        (click)="candidatesDialogVisible = false"></p-button>
+      <p-button type="button" label="Save" styleClass="p-button-primary" (click)="onSaveCadidatesChanges()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+
+<!-- Confirm Unassign Candidates Dialog -->
+<p-dialog [(visible)]="confirmUnassignCandidatesDialogVisible" [modal]="true" [closable]="false"
+  [dismissableMask]="true" [style]="{ width: '600px' }" styleClass="custom-confirm-dialog">
+
+  <div class="text-center px-4 pt-4 pb-2">
+    <img src="../../../../../assets/images/Frame 248.png" width="40" class="mb-3" />
+    <p class="mb-2">
+      Do you want to unassign selected employees from this course?
+    </p>
+    <p class="text-muted small">If you confirm, they will be removed from the course permanently.</p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center gap-3 pb-3">
+      <p-button type="button" label="Cancel" styleClass="cancel-button"
+        (click)="confirmUnassignCandidatesDialogVisible = false"></p-button>
+      <p-button type="button" label="Confirm" styleClass="confirm-button"
+        (click)="confirmUnassignCandidates()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,91 @@
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg,
+            rgba(73, 167, 201, 0.2) 0%,
+            rgba(16, 134, 180, 0.2) 25%,
+            rgba(56, 66, 152, 0.2) 50%,
+            rgba(53, 38, 185, 0.2) 75%,
+            rgba(53, 10, 155, 0.2) 100%);
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* الكارت الأبيض */
+.login-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 360px;
+}
+
+/* اللوجو */
+.logo img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+}
+
+/* العناوين */
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* حقول الإدخال */
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #111827;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #3b82f6;
+}
+
+.btn {
+    width: 100%;
+    background: #12A0C7;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #0284a8;
+}

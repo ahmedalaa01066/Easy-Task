@@ -1,0 +1,126 @@
+<div class="kpi-page">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-left">
+            <h1 class="page-title">Default KPIs</h1>
+            <p class="page-subtitle">View your candidates kPIs</p>
+        </div>
+        <div class="action-buttons">
+            <p-button icon="pi pi-plus" label="Add KPI" styleClass="add-kpi-btn" (onClick)="displayDialog = true">
+            </p-button>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="page-content">
+        <p-table [value]="defaultKpis" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords"
+            [loading]="loading" (onPage)="onPageChange($event)" [showPageLinks]="false" [showFirstLastIcon]="false"
+            [alwaysShowPaginator]="true" class="kpi-table">
+            <!-- Table Header -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="ps-4">KPI Name</th>
+                    <th>Type</th>
+                    <th>Percentage</th>
+                    <th> </th>
+                </tr>
+            </ng-template>
+            <!-- Table Body -->
+            <ng-template pTemplate="body" let-kpi>
+                <tr>
+                    <td class="ps-4">{{ kpi.name }}</td>
+                    <td>
+                        {{ kpi.type === KpiType.Course ? 'Course'
+                        : kpi.type === KpiType.Attendance ? 'Attendance'
+                        : 'Other' }}
+                    </td>
+                    <td>{{ kpi.percentage }}%</td>
+                    <td>
+                        <button pButton class="p-button-text delete-btn" (click)="confirmDelete(kpi)">
+                            <img src="../assets/images/trash-3.png" />
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <!-- ✅ Custom Paginator -->
+            <ng-template pTemplate="paginatorleft" let-state>
+                <span class="page-info">
+                    Page {{ pageIndex }} of {{ calculateTotalPages() }}
+                </span>
+            </ng-template>
+            <ng-template pTemplate="paginatorright" let-state>
+                <button pButton label="Previous" class="p-button-text nav-btn" [disabled]="pageIndex === 1"
+                    (click)="onPageChange({ page: pageIndex - 2, rows: rows })">
+                </button>
+                <button pButton label="Next" class="p-button-text nav-btn"
+                    [disabled]="pageIndex >= calculateTotalPages()"
+                    (click)="onPageChange({ page: pageIndex, rows: rows })">
+                </button>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<!-- Popup Dialog -->
+<p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Add New KPI" [style]="{ width: '600px', height: '350px' }"
+   (onHide)="onDialogHide()"
+>
+    <!-- Form Content -->
+    <form class="candidate-form">
+        <!-- Row: Type + Name -->
+        <div class="form-row">
+            <!-- KPI Type -->
+            <div class="form-field half-width">
+                <label for="type">KPI Type <span class="error-message">*</span></label>
+                <p-dropdown [options]="typeOptions" [(ngModel)]="newKpi.type" name="type" optionLabel="label"
+                    optionValue="value" placeholder="Select Type" styleClass="dropdown-input"
+                    [style]="{ width: '100%' }"></p-dropdown>
+            </div>
+
+            <!-- KPI Name -->
+            <div class="form-field half-width">
+                <label for="name">KPI Name <span class="error-message">*</span></label>
+                <input id="name" type="text" pInputText [(ngModel)]="newKpi.name" name="name"
+                    placeholder="Enter KPI name" class="form-input" />
+            </div>
+        </div>
+
+        <!-- KPI Percentage -->
+        <div class="form-field full-width">
+            <label for="percentage">Percentage <span class="error-message">*</span></label>
+            <input id="percentage" type="number" pInputText [(ngModel)]="newKpi.percentage" name="percentage"
+                placeholder="Enter percentage" class="form-input" />
+        </div>
+    </form>
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="displayDialog=false"
+                    class="cancel-btn"></p-button>
+
+                <p-button label="Save" (onClick)="saveKpi()" [disabled]="!newKpi.name || !newKpi.type"
+                    class="save-btn"></p-button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+<!-- Delete Conirmation -->
+<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [closable]="false" [style]="{ width: '500px' }"
+    header="Confirm Deletion">
+    <div class="p-confirm-dialog-content">
+        <p>Are you sure you want to delete <strong>{{ selectedItem?.name }}</strong>?</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex justify-content-end gap-2">
+
+                 <p-button label="Cancel" [text]="true" severity="secondary" (click)="showDeleteDialog = false"
+                    class="cancel-btn"></p-button>
+            <button pButton type="button" label="Delete" class="confirm-button" (click)="deleteKpi()"></button>
+        </div>
+    </ng-template>
+</p-dialog>

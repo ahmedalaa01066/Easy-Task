@@ -1,0 +1,32 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">Attendance</h1>
+                <p class="page-subtitle">View Your Candidates Attendance</p>
+            </div>
+
+            <div class="action-buttons">
+                <p-button label="Attendance Configuration" icon="pi pi-cog" [routerLink]="'/hr/attendance/attendanceConfig'">
+                </p-button>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <p-tabMenu [model]="tabItems" [activeItem]="tabItems[0]"></p-tabMenu>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="page-content">
+    <app-attendance-list [activeTab]="activeTab"></app-attendance-list>
+  </div>
+
+    <!-- Add Candidate Modal -->
+    <!-- <app-add-candidate 
+    [(visible)]="showAddCandidateModal"
+    (candidateAdded)="onCandidateAdded($event)">
+  </app-add-candidate> -->
+</div>

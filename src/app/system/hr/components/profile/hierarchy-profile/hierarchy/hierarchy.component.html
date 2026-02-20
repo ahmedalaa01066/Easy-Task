@@ -1,0 +1,11 @@
+<div *ngIf="manager.length === 0">No managers found</div>
+<div *ngFor="let h of manager; trackBy: trackByIndex" class="member">
+  <i class="pi pi-user member-icon"></i>
+  <div class="member-text" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div>
+      <div class="member-name">{{ h.managerName }}</div>
+      <div>{{ h.email }}</div>
+    </div>
+    <div class="member-level">{{ h.level }}</div>
+  </div>
+</div>

@@ -1,0 +1,193 @@
+.candidates-table-container {
+  width: 100%;
+  max-width: 1136px;
+}
+/* Table Header */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.options-button {
+  color: #6b7280;
+}
+
+/* Column Specific Styles */
+.candidate-col {
+  width: 280px;
+}
+
+.level-col {
+  width: 120px;
+}
+
+.manager-col {
+  width: 160px;
+}
+
+.position-col {
+  width: 200px;
+}
+
+.status-col {
+  width: 120px;
+}
+
+.date-col {
+  width: 140px;
+}
+
+/* Date Header with Sort Icon */
+.date-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sort-icon {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* Candidate Cell */
+.candidate-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-details {
+  /* display: flex; */
+  flex-direction: column;
+  gap: 2px;
+}
+
+.candidate-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #12A0C7;
+  line-height: 1.4;
+}
+
+.candidate-email {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* Other Cell Styles */
+.level-text,
+.manager-text,
+.position-text,
+.date-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #d1d5db;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .table-header {
+    padding: 16px 20px;
+  }
+  .candidate-col {
+    width: 240px;
+  }
+
+  .position-col {
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    padding: 12px 16px;
+  }
+
+  .table-title {
+    font-size: 16px;
+  }
+  .candidate-cell {
+    gap: 8px;
+  }
+
+  .candidate-email {
+    font-size: 13px;
+  }
+
+  .level-text,
+  .manager-text,
+  .position-text,
+  .date-text {
+    font-size: 13px;
+  }
+}
+.numOfCandidates-cell {
+  color: #12A0C7;
+}
+.management-count {
+  color: #12A0C7;
+  font-weight: bold;
+}
+.dialog-header-divider {
+  border-bottom: 1px solid #e5e7eb;
+  margin: 0  0.7rem; /* يمتد لعرض الديالوج */
+margin-top: 12px;
+}
+
+
+.dialog-footer-divider {
+  border-top: 1px solid #f5f5f5;
+  margin: 0 -1.5rem; /* يغطي عرض كامل لل-dialog */
+}
+
+
+.management-row {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.management-item {
+  border: 1px solid #F5F5F5;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+.small-Email{
+font-size: 0.85rem;
+color: gray;
+}
+

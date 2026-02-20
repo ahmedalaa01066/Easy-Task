@@ -1,0 +1,92 @@
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 1rem;
+}
+
+.course-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #12A0C7;
+}
+
+.course-details p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.go-button {
+  display: block;
+  width: 100%;
+  background-color: #12A0C7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.go-button:hover {
+  background-color: #0e90b8;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border-top: 1px solid #ccc;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #f2f2f2;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0 1.5rem;
+}
+
+.nav-button {
+  background-color: #12A0C7;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.go-button:disabled,
+.go-button.disabled-button {
+  background-color: #999 !important;
+  cursor: not-allowed;
+  color: #eee;
+}

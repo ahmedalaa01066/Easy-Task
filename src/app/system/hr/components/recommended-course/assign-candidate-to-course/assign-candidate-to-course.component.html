@@ -1,0 +1,104 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    (onShow)="onDialogShow()" styleClass="add-candidate-dialog" header="Add New Course"
+    [style]="{ width: '600px', minHeight: '550px' }" (onHide)="onDialogHide()">
+
+    <form [formGroup]="courseForm" class="candidate-form">
+        <div class="form-row d-flex flex-column gap-3">
+            <div class="form-field">
+                <label for="managements">Select Management</label>
+                <p-multiSelect formControlName="managements" [options]="managements" optionLabel="name" optionValue="id"
+                    placeholder="Select Management" display="chip" class="management-multiselect" [filter]="true"
+                    [showToggleAll]="false" appendTo="self">
+                    <ng-template let-option pTemplate="item">
+                        <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                            {{ option.name }}
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+
+
+            </div>
+
+
+            <div class="form-field">
+                <label for="departments">Select Departments</label>
+                <p-multiSelect formControlName="departments" [options]="departments" optionLabel="name" optionValue="id"
+                    placeholder="Select department" display="chip" class="form-input dropdown-input w-100"
+                    [filter]="true" [showToggleAll]="false">
+                    <ng-template let-option pTemplate="item">
+                        <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                            {{ option.name }}
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+
+            </div>
+
+
+        </div>
+
+        <div class="form-field py-3" style="width: 100%;">
+            <label for="candidateIds" style="display: block; ">Select Candidates<span
+                    class="error-message">*</span></label>
+            <p-multiSelect formControlName="candidateIds" [options]="candidates" display="chip" optionLabel="name"
+                optionValue="id" placeholder="Select Candidates" [filter]="true" [showToggleAll]="false"
+                class="form-input dropdown-input w-100">
+                <ng-template let-option pTemplate="item">
+                    <div [ngClass]="{ 'partial-assigned-option': option.assignment === 2 }">
+                        {{ option.name }}
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+
+
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="startDate">Start date<span class="error-message">*</span></label>
+                <p-calendar id="startDate" formControlName="startDate" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"
+                    appendTo="body" [minDate]="today" [showIcon]="true" iconDisplay="input"
+                    class="form-input calendar-input">
+                </p-calendar>
+                <small *ngIf="courseForm.get('startDate')?.invalid && courseForm.get('startDate')?.touched"
+                    class="error-message">
+                    start date is required
+                </small>
+            </div>
+            <div class="form-field">
+                <label for="endDate">End date<span class="error-message">*</span></label>
+                <p-calendar id="endDate" formControlName="endDate" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"
+                    appendTo="body" [showIcon]="true" iconDisplay="input" class="form-input calendar-input">
+                </p-calendar>
+                <small *ngIf="courseForm.get('endDate')?.invalid && courseForm.get('endDate')?.touched"
+                    class="error-message">
+                    end date is required
+                </small>
+                <small
+                    *ngIf="courseForm.errors?.['dateRangeInvalid'] && (courseForm.get('endDate')?.touched || courseForm.get('startDate')?.touched)"
+                    class="error-message">
+                    End date cannot be before start date
+                </small>
+
+            </div>
+        </div>
+    </form>
+
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button *ngIf="currentStep > 0 " label="Back" [text]="true" severity="secondary"
+                    (onClick)="previousStep()" class="back-btn">
+                </p-button>
+
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+                </p-button>
+
+                <p-button label="Save" severity="primary" (onClick)="onSubmit()"
+                    [disabled]=" courseForm.invalid" class="save-btn">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>

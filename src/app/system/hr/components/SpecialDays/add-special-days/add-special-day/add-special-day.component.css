@@ -1,0 +1,74 @@
+.special-day-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-control {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+/* Checkbox */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-check input[type="checkbox"] {
+  accent-color: #12A0C7; /* يخلي الـ checkmark باللون المطلوب */
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.form-check input[type="checkbox"]:checked + label {
+  color: #12A0C7; /* يخلي النص يتغير عند الـ check */
+  font-weight: 500;
+}
+
+/* Footer Buttons */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  background: white !important;
+  border: 1px solid #d1d5db !important;
+  color: #374151 !important;
+  border-radius: 6px !important;
+}
+
+/* Save Button */
+.save-btn {
+  background: #12A0C7 !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 6px !important;
+}
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+}

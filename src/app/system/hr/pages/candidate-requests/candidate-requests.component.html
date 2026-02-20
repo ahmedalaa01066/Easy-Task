@@ -1,0 +1,45 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">Candidates Requests</h1>
+                <p class="page-subtitle">View your requests</p>
+            </div>
+            <p-button icon="pi pi-plus" label="Add Request" (onClick)="onAddCandidate()">
+            </p-button>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+        <p-tabMenu [model]="tabItems" [activeItem]="activeItem">
+            <ng-template pTemplate="item" let-item>
+                <a class="p-menuitem-link">
+                    <span>{{ item.label }}</span>
+                    <span *ngIf="activeTab === +item.id" class="tab-badge">
+                        {{ tabCounts[+item.id] ?? 0 }}
+                    </span>
+
+                </a>
+            </ng-template>
+        </p-tabMenu>
+
+    </div>
+
+
+    <!-- Content Section -->
+    <div class="page-content">
+        <app-request-list [activeTab]="activeTab" (countChanged)="onTabCountChanged($event.tabType, $event.count)"
+            (showEdit)="onEditRequest($event)" (showDetailsEvent)="onShowDetails($event)"></app-request-list>
+    </div>
+
+    <!-- Add Candidate Modal -->
+    <app-add-request [(visible)]="showAddCandidateModal" (candidateAdded)="onCandidateAdded($event)"
+        [editData]="editData" [activeOuterTab]="activeTab">
+    </app-add-request>
+
+    <!-- Request Details Dialog -->
+    <app-request-details [(visible)]="showDetailsModal" [detailsData]="detailsData">
+    </app-request-details>
+</div>

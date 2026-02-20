@@ -1,0 +1,95 @@
+<p-dialog header="Request Details" [(visible)]="visible" [modal]="true" [style]="{width: '700px'}"
+    (onHide)="visible=false">
+
+    <ng-container *ngIf="request">
+        <div class="details-container">
+            <!-- Candidate -->
+            <div class="detail-row">
+                <i class="pi pi-user"></i>
+                <div>
+                    <label>Candidate</label>
+                    <p>{{ request.candidateName }}</p>
+                </div>
+            </div>
+
+            <!-- Request Type -->
+            <div class="detail-row">
+                <i class="pi pi-arrow-right"></i>
+                <div>
+                    <label>Request Type</label>
+                    <p>{{ request.vacationName || request.permissionName }}</p>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="detail-row">
+                <i class="pi pi-circle"></i>
+                <div>
+                    <label>Request Status</label>
+                    <p>
+                        <span class="status-badge" [ngClass]="getStatusClass()">
+                            {{ getStatusLabel() }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Dates -->
+            <!-- Dates (Vacation) -->
+            <div class="date-row" *ngIf="detailsData?.type === 'vacation'">
+                <div>
+                    <i class="pi pi-calendar"></i>
+                    <div>
+                        <label>From Date</label>
+                        <p>{{ request.fromDate | date:'dd-MM-yyyy' }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <i class="pi pi-calendar"></i>
+                    <div>
+                        <label>To Date</label>
+                        <p>{{ request.toDate | date:'dd-MM-yyyy' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date + Time (Permission) -->
+            <div class="date-row" *ngIf="detailsData?.type === 'permission'">
+                <div>
+                    <i class="pi pi-calendar"></i>
+                    <div>
+                        <label>Date</label>
+                        <p>{{ request.date | date:'dd-MM-yyyy' }}</p>
+                    </div>
+                </div>
+
+                <!-- <div>
+                    <i class="pi pi-clock"></i>
+                    <div>
+                        <label>From Time</label>
+                        <p>{{ request.fromTime }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <i class="pi pi-clock"></i>
+                    <div>
+                        <label>To Time</label>
+                        <p>{{ request.toTime }}</p>
+                    </div>
+                </div> -->
+            </div>
+
+
+        </div>
+    </ng-container>
+
+    <ng-template pTemplate="footer">
+        <div class="footer-actions">
+            <p-button  label="Done" class="save-btn" (onClick)="visible=false"></p-button>
+        </div>
+    </ng-template>
+
+</p-dialog>

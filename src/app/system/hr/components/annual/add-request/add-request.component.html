@@ -1,0 +1,31 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Add Request Type" [style]="{ width: '600px' }" (onHide)="closeDialog()">
+
+    <!-- Request Form -->
+    <div [formGroup]="requestForm" class="request-form m-4">
+        <div class="form-field">
+            <label>Request Type Name</label>
+            <input pInputText formControlName="name" placeholder="Enter Name" class="form-input" />
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <label>Maximum Requests Number</label>
+                <input pInputText formControlName="maxRequestNum" placeholder="Maximum Requests Number" type="number"
+                    class="form-input" />
+            </div>
+            <div class="form-field">
+                <label>Confirmation Layer Number</label>
+                <input pInputText formControlName="confirmationLayerNum" placeholder="Confirmation Layer Number"
+                    type="number" class="form-input" />
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+   <ng-template pTemplate="footer">
+  <div class="dialog-footer">
+    <p-button label="Cancel" class="cancel-btn" (onClick)="closeDialog()"></p-button>
+    <p-button label="Save" class="save-btn" (onClick)="save()" [disabled]="requestForm.invalid"></p-button>
+  </div>
+</ng-template>
+
+</p-dialog>

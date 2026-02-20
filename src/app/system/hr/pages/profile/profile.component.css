@@ -1,0 +1,736 @@
+.profile-page {
+    background: #f5f7fb;
+    position: relative;
+    padding: 0;
+}
+
+.profile-header-bg {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(45deg, #ADEAFB 0%, #FFEAF6 100%);
+    position: relative;
+    z-index: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Generic panel card look */
+.panel .p-card {
+    border: none;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding-left: 1.5rem;
+}
+
+.header .left {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+}
+
+/* Avatar */
+.custom-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #eef2f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Info */
+.info {
+    max-width: 760px;
+}
+
+.top-line {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+}
+
+.name {
+    margin: 0;
+    font-size: 1.75rem;
+    /* 28px */
+    font-weight: 700;
+    line-height: 1.2;
+    color: #181D27;
+}
+
+.custom-tag {
+    background-color: #FAFAFA;
+    color: #414651;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+.hierarchy-tag {
+    background-color: #CBF4FF;
+    color: #12A0C7;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 4px;
+}
+
+/* Email + Desc */
+.email {
+    color: #535862;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+.desc {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: #414651;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+/* Edit button */
+.edit-button-wrapper {
+    margin-top: 0.5rem;
+}
+
+.p-button-outlined {
+    border: 1px solid #cfd8e3;
+    color: #414651;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.p-button-outlined:hover {
+    background-color: #f0f4f8;
+    border-color: #b0bec5;
+}
+
+/* Section headers */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .75rem;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.title-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Small grids */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: stretch;
+}
+
+@media (min-width: 992px) {
+    .grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 992px) {
+    .grid-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Hierarchy */
+.hierarchy {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+}
+
+@media (min-width: 768px) {
+    .hierarchy {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.member {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: #FAFAFA;
+    padding: .75rem;
+    border-radius: 12px;
+    border: 1px solid #eef2f7;
+}
+
+.member-icon {
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+.member:hover {
+    border-color: #A7E2F2;
+    background-color: #F0F2F2;
+}
+
+.member:hover .member-icon {
+    background-color: #A7E2F2;
+    color: #12A0C7;
+    border-radius: 50%;
+}
+
+.member-name {
+    font-weight: 500;
+    color: #000000;
+}
+
+.member-level {
+    color: #000000;
+    font-size: 12px;
+}
+
+/* Attendance table */
+.att-table.p-table .p-datatable-thead>tr>th {
+    background: #D8EDF2;
+    color: #535862;
+}
+
+.att-table .center {
+    text-align: center;
+}
+
+.duration {
+    color: #717BBC;
+    font-weight: 600;
+}
+
+/* Empty cards */
+.empty {
+    color: #9aa6b2;
+    font-style: italic;
+    padding: .25rem 0 .5rem;
+}
+
+/* Annual semi arc */
+.annual-box {
+    display: grid;
+    place-items: center;
+    padding: .25rem 0 .75rem;
+}
+
+.semi-arc {
+    width: 180px;
+    height: 90px;
+    border-top-left-radius: 180px;
+    border-top-right-radius: 180px;
+    background: linear-gradient(90deg, #e2efff 0%, #bcdcff 100%);
+    position: relative;
+}
+
+.semi-arc::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    height: 70px;
+    border-top-left-radius: 170px;
+    border-top-right-radius: 170px;
+    background: #fff;
+}
+
+.value {
+    position: absolute;
+    width: 100%;
+    bottom: -18px;
+    text-align: center;
+    font-weight: 700;
+    color: #0ea5e9;
+}
+
+/* Rows list (penalties & courses) */
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eef2f7;
+    border-radius: 14px;
+    padding: .75rem .9rem;
+    background: #fff;
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.dot {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eef5ff;
+    color: #386bff;
+}
+
+.dot.danger {
+    background: #ffecec;
+    color: #e25555;
+    width: 42px;
+    height: 42px;
+}
+
+.item-title {
+    color: #000000;
+    font-size: 16px;
+}
+
+.item-sub {
+    color: #535862;
+    font-size: 12px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #f1f3f5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.icon-btn:hover {
+    background-color: #e2e6ea;
+}
+
+
+.icon-btn.danger.soft {
+    background-color: #ffecec;
+}
+
+.icon-btn.download {
+    background-color: #A7E2F2;
+}
+
+.icon-btn.danger.soft:hover {
+    background-color: #fcd6d6;
+}
+
+/* صورة الأيقونة */
+.icon-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* أيقونة Primeng */
+.icon-btn .pi {
+    font-size: 20px;
+    color: #4b5563;
+    /* رمادي غامق */
+}
+
+.item-actions {
+    display: flex;
+    gap: .35rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.left-col>p-card,
+.right-col>p-card {
+}
+
+
+.panel.stretch-height {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-col {
+    padding-left: 2rem;
+
+}
+
+.right-col {
+    padding-right: 2rem;
+}
+
+.bottom-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 20px;
+}
+
+
+
+.panel.courses-panel {
+    padding-bottom: 3rem;
+}
+
+.recommended-course-btn {
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #1e1e2f; /* خلفية الزر */
+  border: 2px solid transparent;
+  z-index: 0;
+}
+
+/* البوردر جريدنت */
+.recommended-course-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 2px; /* سمك البوردر */
+  background: linear-gradient(90deg, #49A7C9, #4B50B6, #493898, #6F46AF, #5F41A5);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  z-index: -1;
+}
+
+/* النص جريدنت */
+.recommended-course-btn {
+  background: #1e1e2f; /* الخلفية تفضل ثابتة */
+  color: transparent;
+  background-image: linear-gradient(90deg, #49A7C9, #4B50B6, #493898, #6F46AF, #5F41A5);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #49A7C9, #4B50B6, #493898, #6F46AF, #5F41A5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* form styling (إعادة استخدام نفس ستايل Add Candidate) */
+.candidate-form {
+  padding: 16px 24px;
+  min-height: 300px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #414651;
+}
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  height: 40px;
+  color: #111827;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus {
+  outline: none;
+  border-color: #6941c6;
+  box-shadow: 0 0 0 3px rgba(105, 65, 198, 0.1);
+}
+
+/* footer buttons */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  gap: 12px;
+}
+
+.dropdown-input {
+  padding: 0px;
+  border: none;
+}
+
+.upload-box {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  color: #475569;
+  font-size: 14px;
+}
+
+.upload-box.dragover {
+  background-color: #f0f9ff;
+  border-color: #3b82f6;
+}
+
+.upload-box p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.upload-box strong {
+  color: #3b82f6;
+}
+
+.uploaded-list {
+  margin-top: 10px;
+  padding-left: 16px;
+  font-size: 13px;
+  color: #334155;
+}
+.form-row.full-width-row {
+  width: 100%;
+  grid-column: 1 / -1; /* لو مستخدمة grid */
+}
+.form-field.full-width-row {
+  grid-column: 1 / -1; /* تمتد على كل الأعمدة */
+}
+
+
+.upload-box.full-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#bio {
+  min-height: 120px; /* تقريبا 5 rows */
+  resize: vertical;  /* يسمح للمستخدم يكبر ويصغر */
+}
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ياخد ارتفاع الشاشة بالكامل */
+  width: 100%;
+}
+
+
+
+
+
+/* ============================= */
+/*        Responsive Styles      */
+/* ============================= */
+
+/* موبايل وأجهزة صغيرة (عرض أقل من 768px) */
+@media (max-width: 767px) {
+
+  .grid-2,
+  .grid-3,
+  .hierarchy {
+    grid-template-columns: 1fr !important;
+  }
+
+  .left-col,
+  .right-col,
+  .bottom-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .custom-avatar {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .custom-avatar img {
+    object-fit: cover;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .custom-tag {
+    font-size: 16px;
+  }
+
+  .desc {
+    font-size: 0.9rem;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+
+  .p-button {
+    font-size: 13px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .recommended-course-btn {
+    font-size: 12px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .dot {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .item-title {
+    font-size: 14px;
+  }
+
+  .item-sub {
+    font-size: 11px;
+  }
+
+  .value {
+    font-size: 14px;
+    bottom: -14px;
+  }
+
+  .semi-arc {
+    width: 140px;
+    height: 70px;
+  }
+
+  .semi-arc::after {
+    height: 55px;
+  }
+
+  .header-card .p-card {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+}
+
+/* شاشات متوسطة (تابلت) */
+@media (max-width: 992px) {
+  .grid-3 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .info {
+    max-width: 100%;
+  }
+
+  .custom-avatar {
+    margin-bottom: 1rem;
+  }
+}
+
+/* جداول كبيرة مثل الحضور */
+.att-table {
+  overflow-x: auto;
+}
+
+.att-table .p-table {
+  min-width: 600px;
+}
+
+/* عناصر الفليكس */
+.header,
+.panel-header,
+.item-row {
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}

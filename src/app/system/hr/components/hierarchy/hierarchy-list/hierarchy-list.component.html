@@ -1,0 +1,85 @@
+<div class="loading-container" *ngIf="apiStatus === ApiStatus.Loading">
+  <ng-lottie width="200px" height="200px" [options]="options"></ng-lottie>
+</div>
+<ng-container *ngIf="apiStatus === ApiStatus.Loaded">
+  <div class="d-flex gap-4 position-relative mt-3" *ngFor="let section of sections">
+    <!-- Sidebar -->
+    <div class="sidebar-card flex-shrink-0" [ngClass]="getCardBorderClass(section.managementName)">
+      <div class="avatar-circle">👤</div>
+      <h6 class="fw-bold mb-1" title="{{ section.candidateName }}">
+        {{ section.candidateName.substring(0, 10) + "..." }}
+      </h6>
+      <p class="text-muted small mb-0">{{ section.managementName }}</p>
+    </div>
+
+    <!-- Main Cards -->
+    <div class="flex-grow-1 p-2" [ngClass]="getCardBorderClass(section.managementName)">
+      <div style="overflow-x: auto">
+        <div class="d-flex align-items-center g-3">
+          <div class="hierarchy-card" *ngFor="let manager of section.candidates; let mIndex = index">
+            <div class="card h-100">
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <ng-container
+                    *ngIf="editHierarchyNameIndex === mIndex; else normalView"
+                  >
+                    <input
+                      type="text"
+                      class="form-control form-control-sm w-50"
+                      [(ngModel)]="editedName"
+                    />
+                    <p-button
+                    label="Save"
+                      class="btn btn-sm text-success p-0"
+                      (onClick)="saveHierarchyNameEdit()"
+                    >
+                    </p-button>
+                  </ng-container>
+
+                  <!-- 👇 العرض الطبيعي -->
+                  <ng-template #normalView>
+                    <div class="d-flex align-items-center">
+
+                      <h5
+                        class="card-title mb-0 text-truncate manager-name"
+                        [title]="manager.candidateName" 
+                      >
+                        {{ manager.candidateName }}
+                      </h5>
+                      <span class="ms-1 small text-muted statusManager p-1">Manager</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="edit-icon" (click)="startHierarchyNameEdit(mIndex, manager)">
+                        •••
+                      </span>
+                    </div>
+                  </ng-template>
+                </div>
+                <!-- الأقسام -->
+                <div class="team-box">
+                  <div class="tree-line-vertical"></div>
+
+                  <div
+                    [ngClass]="getBackgroundClass(section.managementName)"
+                    class="py-2"
+                  >
+                    <div
+                      class="tree-item"
+                      *ngFor="let dept of manager.candidateThirdLevel"
+                    >
+                      <div class="tree-label" style="cursor: pointer;" (click)="goToProfile(dept.candidateID)">
+                        <strong >{{ dept.candidateName }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

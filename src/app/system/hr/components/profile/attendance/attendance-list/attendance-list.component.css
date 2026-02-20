@@ -1,0 +1,179 @@
+/* الكارد الرئيسي للجزء */
+.panel {
+  border-radius: 18px;
+  
+}
+
+/* Header panel */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+/* نص الـ Title */
+.panel-header .name {
+  margin: 0;
+  font-size: 1.75rem;
+  /* 28px */
+  font-weight: 700;
+  line-height: 1.2;
+  color: #181d27;
+}
+
+/* زر Edit Duration */
+.panel-header .p-button-outlined {
+  border: 1px solid #cfd8e3;
+  color: #414651;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.panel-header .p-button-outlined:hover {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}
+
+/* الجدول */
+.att-table.p-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+
+/* محاذاة الأعمدة */
+.att-table .center {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Duration */
+.att-table .duration {
+  color: #717bbc;
+  font-weight: 600;
+}
+
+/* صفوف الـ body */
+.att-table .p-datatable-tbody > tr > td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #eef2f7;
+  color: #111827;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Highlight عند hover */
+.att-table .p-datatable-tbody > tr:hover {
+  background-color: #f5f7fb;
+}
+
+.pagination-wrapper .page-btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #cfd8e3;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination-wrapper .page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-wrapper .page-btn:hover:not(:disabled) {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between; /* عناصر اليسار واليمين منفصلة */
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  font-size: 14px;
+  color: #555;
+}
+
+/* النص على الشمال */
+.pagination-wrapper .page-info {
+  text-align: left;
+}
+
+/* الزراير على اليمين */
+.pagination-wrapper .page-controls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pagination-wrapper .page-btn {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #cfd8e3;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination-wrapper .page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-wrapper .page-btn:hover:not(:disabled) {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}
+
+/* filter */
+
+
+/* Form Fields */
+.candidate-form {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #414651;
+  margin-bottom: 6px;
+}
+
+.calendar-input .p-calendar .p-inputtext {
+  width: 100%;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+}
+
+.calendar-input .p-calendar .p-inputtext:focus {
+  border-color: #12A0C7;
+  box-shadow: 0 0 0 3px rgba(105, 65, 198, 0.1);
+}
+
+/* Footer */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
+}
+.footer-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.disabled-div {
+    pointer-events: none; /* يمنع التفاعل مع العناصر جوه */
+    opacity: 0.6; /* يعطي مظهر معطل */
+}

@@ -1,0 +1,134 @@
+.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detail-row i {
+  font-size: 1.2rem;
+  color: #181D27;
+  background: #F5F5F5;
+  padding: 8px;
+  border-radius: 8px; /* لو عايزاها مربعة بحواف ناعمة */
+  /* border-radius: 50%;  لو عايزاها دايرة */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.date-row i {
+  font-size: 1.2rem;
+  color: #181D27;
+  background: #F5F5F5;
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+
+.detail-row label,
+.date-row label {
+  font-size: 0.8rem;
+  color: #717680; 
+  display: block;
+  margin-bottom: 2px;
+}
+
+.detail-row p,
+.date-row p {
+  margin: 0;
+  font-weight: 500;
+  color: #000000; 
+}
+
+
+.date-row {
+  display: flex;
+  justify-content: flex-start; 
+  gap: 15rem; 
+  margin-top: 1rem;
+}
+
+.date-row > div {
+  display: flex;
+  gap: 0.75rem;        
+  align-items: flex-start;
+}
+
+.date-row > div > div {
+  display: flex;
+  flex-direction: column; 
+}
+
+
+.date-row label {
+  font-size: 0.8rem;
+  color: #717680; 
+  display: block;
+  margin-bottom: 2px;
+}
+
+.date-row p {
+  margin: 0;
+  font-weight: 500;
+  color: #000000; 
+}
+
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+
+.status-badge.pending {
+  background: #FFFAEB;
+  color: #DC6803;
+}
+
+.status-badge.first-approval {
+  background-color: #3b82f6; 
+  color: white;
+}
+
+.status-badge.second-approval {
+  background: #039855;
+  color: #F6FEF9; 
+}
+
+.status-badge.rejected {
+ background: #F04438;
+  color: #FDFDFD; 
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end; 
+  width: 100%;
+}
+
+.done-btn {
+  background-color: #ffffff !important; 
+  color: #414651 !important;            
+  border: 1px solid #414651 !important;  
+  border-radius: 6px;                   
+  padding: 6px 16px;                    
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+

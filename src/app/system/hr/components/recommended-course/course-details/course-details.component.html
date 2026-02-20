@@ -1,0 +1,162 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">{{ courseDetails?.name }}</h1>
+                <p class="page-subtitle">{{ courseDetails?.content }}</p>
+            </div>
+
+            <div class="action-buttons">
+                <div class=" imgDelete p-1" *ngIf="courseDetails.candidateNumber==0">
+                    <img src="../../../../../assets/images/trash-2.png" (click)="showDeleteConfirmation()" />
+                </div>
+                <button class="btn btnEdit" (click)="openEditCourse()">Edit Course</button>
+            </div>
+        </div>
+
+        <!-- Course Info Section -->
+        <div class="course-info ">
+            <div class="info-item">
+                <img src="../../../../../assets/images/user-sharing.png" class="icon p-2 my-2" />
+                <div class="info-text justify-content-between">
+                    <div class="label my-1">Course Instructor</div>
+                    <div class="value my-1">{{ courseDetails?.instructorName }}</div>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <img src="../../../../../assets/images/link-02.png" class="icon p-2 my-2" />
+                <div class="info-text">
+                    <div class="label my-1">Course Link</div>
+                    <div class="value link my-1">
+                        <a href="https://www.udemy.com/career/digital-marketer/" target="_blank">
+                            {{ courseDetails?.link }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="candidates-table-container mt-2">
+        <!-- Table Header -->
+        <div class="table-header d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <h5 class="mb-0">Assigned Candidates</h5>
+                <span class="count-badge p-1">{{ candidates.length }}</span>
+            </div>
+            <button class="btn addCandidate" (click)="openAssignCandidate()">
+                Assign candidate
+            </button>
+        </div>
+
+
+        <!-- Data Table -->
+        <p-table [value]="candidates" [paginator]="true" [rows]="rows" [totalRecords]="candidates.length" [first]="0"
+            responsiveLayout="stack" [scrollable]="true" scrollHeight="600px" [tableStyle]="{ 'min-width': '50rem' }"
+            [showCurrentPageReport]="true"
+            [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'"
+            styleClass="candidates-table">
+
+            <!-- All Candidates Column -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th id="candidate-col">All Candidates</th>
+                    <th id="manager-col">Management</th>
+                    <th id="manager-col">Action</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-candidate>
+                <tr>
+                    <!-- Candidate Info -->
+                    <td class="candidate-info">
+                        <div class="candidate-cell">
+                            <p-avatar [image]="candidate.path ? environment.api + '/' + candidate.path : undefined"
+                                [label]="!candidate.path ? getInitialsFromFullName(candidate.candidateName) : undefined"
+                                size="normal" shape="circle"
+                                [style]="{'background-color': '#F9F5FF', 'color': '#7F56D9'}">
+                            </p-avatar>
+
+                            <div class="candidate-details">
+                                <div class="candidate-name">{{ candidate.candidateName }}</div>
+                                <div class="candidate-email">{{ candidate.candidateEmail }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- Manager -->
+                    <td id="manager-cell">
+                        <span class="manager-text">{{candidate.managementName}}</span>
+                    </td>
+                    <td>
+                        <img src="../../../../../assets/images/trash-2.png"
+                            (click)="showUnassginCandidate(candidate.candidateId)">
+                    </td>
+                </tr>
+            </ng-template>
+
+            <!-- Empty State -->
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="100%" class="empty-message">
+                        <div class="empty-state">
+                            <i class="pi pi-users empty-icon"></i>
+                            <p>No candidates found</p>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+
+<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [closable]="false" [style]="{ width: '500px' }"
+    header="Confirm Deletion">
+    <div class="p-confirm-dialog-content">
+        <p>Are you sure you want to delete This Course ?</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex justify-content-end gap-2">
+            <p-button type="button" label="Cancel" styleClass="cancel-button btn"
+                (click)="showDeleteDialog = false"></p-button>
+            <p-button  type="button" label="Delete" styleClass="confirm-button btn" (click)="deleteCourse()"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+
+<!-- Confirm Unassign Candidates Dialog -->
+<p-dialog [(visible)]="confirmUnassignCandidatesDialogVisible" [modal]="true" [closable]="false"
+    [dismissableMask]="true" [style]="{ width: '600px' }" styleClass="custom-confirm-dialog">
+
+    <div class="text-center px-4 pt-4 pb-2">
+        <img src="../../../../../assets/images/Frame 248.png" width="40" class="mb-3" />
+        <p class="mb-2">
+            Do you want to unassign this Employee From this Course?
+        </p>
+        <p class="text-muted small">If you confirm, they will be removed from the course permanently.</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex justify-content-center gap-3 pb-3">
+            <p-button  type="button" label="Cancel" styleClass="cancel-button btn"
+                (click)="confirmUnassignCandidatesDialogVisible = false"></p-button>
+            <p-button type="button" label="Confirm" styleClass="confirm-button btn"
+                (click)="confirmUnassignCandidates()"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<app-edit-course *ngIf="showEditDialog" [course]="courseDetails" (close)="showEditDialog = false"
+    (updated)="reloadCourseDetails()"></app-edit-course>
+
+<app-assign-candidate-to-course
+  [(visible)]="showAssignDialog"
+  (close)="showAssignDialog = false"
+  (assigned)="reloadCourseDetails()">
+</app-assign-candidate-to-course>

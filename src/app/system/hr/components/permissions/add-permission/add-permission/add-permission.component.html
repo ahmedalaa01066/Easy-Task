@@ -1,0 +1,79 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+  (onHide)="visibleChange.emit(false)" styleClass="add-candidate-dialog" header="Permissions"
+  [style]="{ width: '700px',height :'350px' }">
+
+  <!-- Steps Navigation -->
+  <div class="steps-container">
+    <div class="custom-steps">
+      <!-- Step 1 -->
+      <div class="step-item d-flex align-items-right flex-row" [class.active]="currentStep >= 0"
+        [class.completed]="currentStep > 0">
+
+        <div class="step-indicator mb-0 me-2">
+          <i *ngIf="currentStep > 0" class="pi pi-check"></i>
+          <span *ngIf="currentStep === 0 || currentStep < 0">1</span>
+        </div>
+        <p class="step-title mb-0">Select Name</p>
+      </div>
+
+      <!-- Chevron -->
+      <div class="step-connector" [class.completed]="currentStep > 0">
+        <img src="assets/images/chevrons-right.svg" alt="chevron-right" />
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 1"
+        [class.completed]="currentStep > 1">
+        <div class="step-indicator mb-0 me-2">
+          <i *ngIf="currentStep > 1" class="pi pi-check"></i>
+          <span *ngIf="currentStep === 1 || currentStep < 1">2</span>
+        </div>
+        <p class="step-title mb-0">Assign Permissions</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="candidate-form">
+    <div class="form-step" *ngIf="currentStep === 0">
+      <div class="form-field dropdown-input">
+        <label for="candidate">Candidate Name</label>
+        <p-dropdown [options]="candidateList" [(ngModel)]="selectedCandidate" optionLabel="name"
+          placeholder="Select candidate">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <!-- Assign Permissions Step -->
+    <div class="form-step" *ngIf="currentStep === 1">
+      <div class="permissions-grid">
+        <div class="permission-item" *ngFor="let perm of permissionsList">
+          <label>{{ perm.label }}</label>
+          <p-inputSwitch [(ngModel)]="perm.value"></p-inputSwitch>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dialog-footer">
+    <button class="cancel-btn p-button" (click)="onCancel()">Cancel</button>
+
+    <!-- زر "رجوع" -->
+    <button class="cancel-btn p-button" *ngIf="currentStep === 1" (click)="currentStep = 0">
+      Back
+    </button>
+
+    <!-- زر "التالي" -->
+    <button class="save-btn p-button" *ngIf="currentStep === 0" (click)="onNext()" [disabled]="!selectedCandidate">
+      Next
+    </button>
+
+    <!-- زر "حفظ" -->
+    <button class="save-btn p-button" *ngIf="currentStep === 1" (click)="onSave()">
+      Save
+    </button>
+  </div>
+
+
+</p-dialog>

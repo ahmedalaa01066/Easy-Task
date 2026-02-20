@@ -1,0 +1,31 @@
+<p-card styleClass="panel p-3 my-2">
+  <ng-template pTemplate="header">
+    <div class="panel-header">
+      <span class="name">Annual</span>
+      <!-- <div class="actions">
+        <button pButton label="Details" class="p-button-outlined p-button-sm"></button>
+        <button pButton label="Add Annual" class="p-button-outlined p-button-sm"></button>
+      </div> -->
+    </div>
+  </ng-template>
+
+  <div class="annual-box">
+    <div class="semi-arc">
+      <svg viewBox="0 0 100 50" class="arc">
+        <!-- الخلفية الرمادي -->
+        <path d="M 10 50 A 40 40 0 0 1 90 50"
+              stroke="#e5e7eb"
+              stroke-width="10"
+              fill="transparent"/>
+        <!-- الجزء الأزرق -->
+        <path d="M 10 50 A 40 40 0 0 1 90 50"
+              stroke="#0ea5e9"
+              stroke-width="10"
+              fill="transparent"
+              stroke-dasharray="126"
+              [attr.stroke-dashoffset]="126 - (annualLeave / maxLeave) * 126"/>
+      </svg>
+      <div class="value">{{ annualLeave }} Days</div>
+    </div>
+  </div>
+</p-card>

@@ -1,0 +1,106 @@
+.panel {
+  border-radius: 18px;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  max-width: 500px; /* عشان الكارت مايبقاش ضخم */
+  margin-inline: auto;
+}
+
+/* Header panel */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* يخلي الأزرار تنزل تحت في الشاشات الصغيرة */
+  gap: .5rem;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #181D27;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.panel-header .p-button-outlined {
+  border: 1px solid #cfd8e3;
+  color: #414651;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.panel-header .p-button-outlined:hover {
+  background-color: #f0f4f8;
+  border-color: #b0bec5;
+}
+
+/* ---------------------- */
+/* Responsive Arc Box */
+/* ---------------------- */
+
+.annual-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.semi-arc {
+  position: relative;
+  width: 100%;
+  max-width: 250px; /* الحجم الأقصى على الديسكتوب */
+  aspect-ratio: 2 / 1; /* نص دايرة بنسبة 2:1 */
+}
+
+.arc {
+  width: 100%;
+  height: auto;
+}
+
+.value {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #111827;
+  white-space: nowrap;
+}
+
+/* ---------------------- */
+/* 📱 موبايل أصغر */
+/* ---------------------- */
+@media (max-width: 600px) {
+  .panel {
+    padding: 0.75rem 1rem;
+  }
+
+  .name {
+    font-size: 1.2rem;
+  }
+
+  .semi-arc {
+    max-width: 180px; /* تصغير النص الدايرة */
+  }
+
+  .value {
+    font-size: 0.9rem;
+  }
+
+  .actions button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

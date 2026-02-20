@@ -1,0 +1,67 @@
+<div class="row g-3">
+  <ng-container *ngFor="let item of managementList; let mIndex = index">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-4">
+            <!-- شرط: هل هذا العنصر هو اللي بيتعدل؟ -->
+            <ng-container *ngIf="editManagementNameIndex === mIndex; else normalView">
+              <input type="text" class="form-control form-control-sm w-50" [(ngModel)]="editedName"
+                style="max-width: 70%" />
+              <p-button class="btn btn-sm text-success p-0" label="Save" (onClick)="saveManagementNameEdit()">
+              </p-button>
+            </ng-container>
+
+            <!-- العرض العادي -->
+            <ng-template #normalView>
+              <h5 class="card-title mb-0">{{ item.name }}</h5>
+              <span class="text-muted" style="cursor: pointer" (click)="startManagementNameEdit(mIndex)">•••</span>
+            </ng-template>
+          </div>
+
+          <div class="team-box">
+            <div class="tree-line-vertical"></div>
+            <div *ngIf="item.departments?.length > 0" class="bg-brand-light">
+              <div class="tree-item" *ngFor="let dept of item.departments">
+                <div class="tree-label">
+                  <strong>{{ dept.name }}</strong>
+                </div>
+                <span class="candidate-badge">
+                  {{ dept.candidateCount }}
+                  <p class="d-inline color-gray-600">Candidate</p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<!-- edit Management -->
+<p-dialog [(visible)]="showEditPopup" [modal]="true" [style]="{ width: '400px' }" header="Edit Management"
+  [dismissableMask]="true" [baseZIndex]="10000">
+
+  <div class="dialog-body">
+    <div class="form-group">
+      <label class="form-label">Management Name</label>
+      <input type="text" [(ngModel)]="editedManagementName" class="form-control custom-control" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Manager</label>
+      <p-dropdown [options]="managers" [(ngModel)]="editedManagerId" placeholder="Select a manager" optionLabel="name"
+        optionValue="id"  class="form-input dropdown-input" ></p-dropdown>
+
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex gap-2 justify-content-end">
+      <p-button   label="Cancel" class="cancel-btn"
+        (onClick)="showEditPopup = false"></p-button>
+      <p-button   label="Save" class="save-btn" (onClick)="savePopupEdit()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

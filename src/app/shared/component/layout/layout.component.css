@@ -1,0 +1,86 @@
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfdfd;
+  margin-inline-start: 136px;
+}
+app-side-menu {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+
+/* Main Header Styles */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 14px 32px;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 72px;
+}
+
+/* Date Filters */
+.date-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  min-width: 160px;
+  border: 1px solid #d5d7da;
+  height: 40px;
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+}
+
+.date-picker .pi-calendar {
+  color: #414651;
+  font-size: 16px;
+}
+
+.date-label {
+  font-size: 12px;
+  color: #6366f1;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.date-value {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .search-container {
+    max-width: none;
+  }
+
+  .date-filters {
+    justify-content: center;
+  }
+}

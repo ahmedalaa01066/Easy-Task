@@ -1,0 +1,34 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">Requests Types</h1>
+                <p class="page-subtitle">View your annuals</p>
+            </div>
+
+            <div class="action-buttons">
+                <p-button icon="pi pi-plus" label="Add Request Type" (onClick)="onAddRequest()">
+                </p-button>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-management mb-4 position-relative w-50">
+            <i class="pi pi-search search-icon"></i>
+            <input type="text" placeholder="Search for request type" [(ngModel)]="searchTerm"
+                class="form-control ps-5" />
+        </div>
+    </div>
+
+    <div class="page-content">
+        <app-annual-list [searchTerm]="searchTerm" (editRequest)="onEditRequest($event)">
+        </app-annual-list>
+    </div>
+    <!-- Add Candidate Modal -->
+   <app-add-request
+  [(visible)]="showAddRequestModal"
+  [requestToEdit]="selectedRequest"
+  (requestAdded)="onRequestAdded($event)"
+></app-add-request>
+</div>

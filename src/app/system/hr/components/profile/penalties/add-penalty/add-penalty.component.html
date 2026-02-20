@@ -1,0 +1,33 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Add New Penalty" [style]="{ width: '600px' }"
+    (onHide)="onDialogHide()">
+
+
+    <!-- Form Content -->
+    <form [formGroup]="penaltyForm" class="candidate-form">
+        <div class="form-field ">
+            <label for="description"> Description <span class="error-message">*</span></label>
+            <input id="description" type="text" pInputText formControlName="description" placeholder="Description"
+                class="form-input" />
+            <small *ngIf="penaltyForm.get('description')?.invalid && penaltyForm.get('description')?.touched"
+                class="error-message">
+                Description is required (min 2 characters)
+            </small>
+
+           
+        </div>
+    </form>
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
+                </p-button>
+
+               <p-button label="Save" severity="primary" (onClick)="onSubmit()" class="save-btn"></p-button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,28 @@
+<div class="candidates-page">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">Hierarchy</h1>
+        <p class="page-subtitle">View your company's Hierarchy Level</p>
+      </div>
+
+      <div class="action-buttons">
+        <p-button icon="pi pi-plus" label="Add Level" (onClick)="onAddHierarchy()">
+        </p-button>
+      </div>
+      
+    </div>
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <p-tabMenu [model]="tabItems" [activeItem]="tabItems[0]"></p-tabMenu>
+    </div>
+  </div>
+  <!-- Content Section -->
+  <div class="page-content">
+    <app-hierarchy-list [activeTab]="activeTab"></app-hierarchy-list>
+  </div>
+  <!-- Add Candidate Modal -->
+  <app-add-hierarchy [(visible)]="showAddHierarchyModal" (hierarchyAdded)="onHierarchyAdded($event)">
+  </app-add-hierarchy>
+</div>

@@ -1,0 +1,88 @@
+<div class="kpi-list">
+    <div class="kpi-card" *ngFor="let item of kpisList">
+        <!-- Header -->
+        <div class="kpi-header">
+            <!-- Avatar -->
+            <p-avatar *ngIf="!item.path" label="{{ getInitials(item.name) }}" shape="circle" size="large">
+            </p-avatar>
+
+            <p-avatar *ngIf="item.path" [image]="getFullPath(item.path)" shape="circle" size="large"></p-avatar>
+
+
+            <div class="kpi-header-text">
+                <div class="kpi-name">{{ item.name }}</div>
+                <div class="kpi-role">{{ item.positionName }}</div>
+            </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-body">
+            <ng-container *ngIf="item.candidateKPIs?.kpIsName?.length; else noKpi">
+                <p *ngFor="let kpi of item.candidateKPIs.kpIsName">
+                    {{ kpi }}
+                </p>
+                <p class="last-update" *ngIf="item.candidateKPIs?.updatedDate">
+                    Last update {{ item.candidateKPIs.updatedDate | date: 'dd-MM-yyyy' }}
+                </p>
+            </ng-container>
+
+            <ng-template #noKpi>
+                <p>No KPIs assigned</p>
+            </ng-template>
+        </div>
+
+        <!-- Button -->
+        <div class="kpi-footer">
+            <button class="kpi-btn" (click)="onAddKpi(item.id)">
+                Add Kpi or Penality
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Dialog -->
+<p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
+    styleClass="add-candidate-dialog" header="Add KPI / Penalty" [style]="{ width: '600px', height: '350px' }"
+    (onHide)="onDialogHide()">
+    <!-- Form Content -->
+    <form class="candidate-form">
+        <!-- Row: Type + Name -->
+        <div class="form-row">
+            <!-- KPI Type -->
+            <div class="form-field half-width">
+                <label for="type">KPI Type <span class="error-message">*</span></label>
+                <p-dropdown [options]="typeOptions" [(ngModel)]="newKpi.type" name="type" optionLabel="label"
+                    optionValue="value" placeholder="Select Type" styleClass="dropdown-input"
+                    [style]="{ width: '100%' }"></p-dropdown>
+            </div>
+
+            <!-- KPI Name -->
+            <div class="form-field half-width">
+                <label for="name">KPI Name <span class="error-message">*</span></label>
+                <input id="name" type="text" pInputText [(ngModel)]="newKpi.name" name="name"
+                    placeholder="Enter KPI name" class="form-input" />
+            </div>
+        </div>
+
+        <!-- KPI Percentage -->
+        <div class="form-field full-width">
+            <label for="percentage">Percentage <span class="error-message">*</span></label>
+            <input id="percentage" type="number" pInputText [(ngModel)]="newKpi.percentage" name="percentage"
+                placeholder="Enter percentage" class="form-input" />
+        </div>
+    </form>
+
+    <!-- Dialog Footer -->
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <div class="footer-right">
+                <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="displayDialog=false"
+                    class="cancel-btn"></p-button>
+
+                <p-button label="Save" (onClick)="saveKpi()" [disabled]="!newKpi.name || !newKpi.type"
+                    class="save-btn"></p-button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

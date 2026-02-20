@@ -1,0 +1,164 @@
+.candidates-page {
+  padding: 24px 32px;
+  background-color: #fdfdfd;
+  min-height: calc(100vh - 72px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #181d27;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #535862;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  padding-top: 0;
+}
+
+/* PrimeNG Button Customization */
+::ng-deep .candidates-page .p-button {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+::ng-deep .candidates-page .p-button.p-button-outlined {
+  background-color: white;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+::ng-deep .candidates-page .p-button.p-button-outlined:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+::ng-deep .candidates-page .p-button:not(.p-button-outlined) {
+  background-color: #12A0C7;
+  border-color: #12A0C7;
+  color: white;
+}
+
+::ng-deep .candidates-page .p-button:not(.p-button-outlined):hover {
+  background-color: #12A0C7;
+  border-color: #12A0C7;
+}
+
+/* PrimeNG TabMenu Customization */
+::ng-deep .candidates-page .p-tabmenu {
+  border: none;
+  background: transparent;
+}
+
+::ng-deep .candidates-page .p-tabmenu .p-tabmenu-nav {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+::ng-deep .candidates-page .p-tabmenu .p-tabmenuitem {
+  margin-inline-end: 24px;
+}
+
+::ng-deep .candidates-page .p-tabmenu .p-tabmenuitem .p-menuitem-link {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 12px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .candidates-page .p-tabmenu .p-tabmenuitem .p-menuitem-link:hover {
+  color: #374151;
+  background: transparent;
+}
+
+::ng-deep
+  .candidates-page
+  .p-tabmenu
+  .p-tabmenuitem.p-highlight
+  .p-menuitem-link {
+  color: #12A0C7;
+  border-bottom-color: #12A0C7;
+  background: transparent;
+}
+
+::ng-deep
+  .candidates-page
+  .p-tabmenu
+  .p-tabmenuitem.p-highlight
+  .p-menuitem-link:hover {
+  color: #12A0C7;
+  background: transparent;
+}
+
+/* Content Section */
+.page-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidates-page {
+    padding: 16px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .action-buttons {
+    justify-content: flex-end;
+  }
+
+  ::ng-deep .candidates-page .p-tabmenu .p-tabmenuitem {
+    margin-right: 16px;
+  }
+}
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 16px;
+  pointer-events: none;
+}

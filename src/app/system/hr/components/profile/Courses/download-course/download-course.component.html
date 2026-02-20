@@ -1,0 +1,22 @@
+<p-dialog header="Course Documents" [(visible)]="visible" [modal]="true"
+    [style]="{width: '600px'}" [draggable]="false" [resizable]="false">
+
+    <div class="docs-list">
+        <div class="doc-row" *ngFor="let doc of courseDocs; trackBy: trackByIndex">
+            <div class="doc-left">
+                <img class="folder-img" src="/assets/images/folder.png" class="doc-icon" />
+                <span class="doc-name">{{ doc.name }}</span>
+            </div>
+
+            <button class="doc-download-btn" (click)="downloadDoc(doc)">
+                <img src="/assets/images/arrow-down-circle.png" />
+            </button>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <p-button  label="Cancel" styleClass="cancel-button" (click)="closeDialog()"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>

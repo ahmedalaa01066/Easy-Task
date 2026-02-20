@@ -1,0 +1,87 @@
+<div class="candidates-table-container">
+    <!-- Table Header -->
+    <div class="table-header">
+        <h3 class="table-title">Created Jobs</h3>
+        <button class="createbtn" (click)="onAddPosition()">Create New Position</button>
+    </div>
+
+    <!-- Data Table -->
+    <p-table [value]="jobs" [scrollable]="true" scrollHeight="600px" [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="candidates-table">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Job Name</th>
+                <th>Management</th>
+                <th>job Code</th>
+                <th>Describion</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-job>
+            <tr>
+                <td>{{ job.name }}</td>
+                <td>{{ job.managementName }}</td>
+                <td>{{ job.jobCode }}</td>
+                <td>
+                    {{ job.description.split(' ').slice(0, 3).join(' ') }}<span
+                        *ngIf="job.description.split(' ').length > 3">...</span>
+                </td>
+
+                <td>
+                    <img class="mx-1" style="width: 20px;" src="../../../../../assets/images/edit.png"
+                        (click)="editPosition(job)">
+                    <img class="mx-1" src="../../../../../../assets/images/trash.png"
+                        (click)="showDeleteConfirmation(job)">
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3" class="empty-message">No Jobs found</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Custom Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+  <span class="page-info">
+    Page {{ pageIndex }} of {{ totalPages }}
+  </span>
+  <div class="page-controls">
+    <button class="page-btn" (click)="Previous()" [disabled]="pageIndex === 1">
+      Previous
+    </button>
+    <button class="page-btn" (click)="Next()" [disabled]="pageIndex === totalPages">
+      Next
+    </button>
+  </div>
+</div>
+
+</div>
+<!-- Delete Conirmation -->
+
+<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [closable]="false" [style]="{ width: '500px' }"
+   >
+   <div class="delIcon">
+    <img src="../../../../../../assets/images/Frame 248.png">
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <p>Are you sure you want to delete <strong>{{ selectedItem?.name }}</strong>?</p>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="d-flex justify-content-center gap-2">
+            <p-button label="Cancel" class="cancel-btn" (click)="showDeleteDialog = false"></p-button>
+            <p-button type="button" label="Delete" styleClass="confirm-button" (click)="deleteJob()"></p-button>
+
+        </div>
+    </ng-template>
+</p-dialog>
+
+<!-- Add Candidate Modal -->
+<app-add-new-position [(visible)]="showAddPositionModal" [jobToEdit]="editingJob"
+    (positionAdded)="onPositionAdded()">
+</app-add-new-position>

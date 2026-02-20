@@ -1,0 +1,48 @@
+<p-dialog header="Special Days" [(visible)]="visible" [modal]="true" [style]="{ width: '600px' }"
+  (onHide)="closeDialog()">
+  <form [formGroup]="specialDayForm" class="special-day-form">
+    <!-- Special Day Name -->
+    <div class="form-group">
+      <label for="name">Special Day Name</label>
+      <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter name" />
+      <small class="error" *ngIf="specialDayForm.get('name')?.invalid && specialDayForm.get('name')?.touched">
+        Name is required
+      </small>
+    </div>
+
+    <!-- Dates -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="from">From Date</label>
+        <input id="from" type="date" class="form-control" formControlName="fromDate" />
+      </div>
+
+      <div class="form-group">
+        <label for="to">To Date</label>
+        <input id="to" type="date" class="form-control" formControlName="toDate" />
+      </div>
+    </div>
+
+    <!-- Checkbox -->
+    <div class="form-check">
+      <input type="checkbox" id="oneDay" formControlName="isOneDay" />
+      <label for="oneDay">Mark as One Day</label>
+    </div>
+
+    <!-- Custom Validation Error -->
+    <div *ngIf="specialDayForm.errors?.['oneDayError']" class="error">
+      If "One Day" is checked, To Date must be empty or equal to From Date.
+    </div>
+    <div *ngIf="specialDayForm.errors?.['dateRangeError']" class="error">
+      To Date cannot be earlier than From Date.
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button  label="Cancel" styleClass="cancel-btn" (click)="closeDialog()"></p-button>
+      <p-button  label="Save" styleClass="save-btn" (click)="onSave()" [disabled]="specialDayForm.invalid"></p-button>
+    </div>
+  </ng-template>
+
+</p-dialog>

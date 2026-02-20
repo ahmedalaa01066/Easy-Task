@@ -1,0 +1,134 @@
+<div class="side-menu-container">
+  <!-- Header Section -->
+  <div class="menu-header">
+    <img src="assets/images/Logomark.png" alt="" height="32px" />
+    <span class="brand-name">Untitled UI</span>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="menu-nav">
+    <ul class="menu-list">
+      <li class="menu-item">
+        <a routerLink="/home" class="menu-link">
+          <i class="pi pi-home"></i>
+          <span>Home</span>
+          <i class="pi pi-chevron-down"></i>
+        </a>
+      </li>
+
+      <li class="menu-item has-submenu">
+        <a routerLink="/hr" class="menu-link" (click)="toggleHrModule()">
+          <i class="pi pi-chart-bar"></i>
+          <span>HR Module</span>
+          <i class="pi" [class.pi-chevron-up]="isHrExpanded" [class.pi-chevron-down]="!isHrExpanded"></i>
+        </a>
+        <ul class="submenu" [class.expanded]="isHrExpanded">
+          <li class="submenu-item">
+            <a routerLink="/hr/dashboard" class="submenu-link">Dashboard</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/candidates" class="submenu-link">Candidates</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/managements" class="submenu-link">Managements</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/hierarchy" class="submenu-link">Hierarchy</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/attendance" class="submenu-link">Attendance</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/kpi" class="submenu-link">Rates & KPIs</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/requestNotification" class="submenu-link">Request Notification</a>
+          </li>
+           <!-- <li class="submenu-item">
+            <a routerLink="/hr/permissions" class="submenu-link">Permissions</a>
+          </li> -->
+
+          <li class="submenu-item">
+            <a routerLink="/hr/candidateRequests" class="submenu-link"> Candidate Requests</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/annual" class="submenu-link">Annuals</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/documents" class="submenu-link">Documents</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/specialDays" class="submenu-link">Special Days</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/jobs" class="submenu-link">Jobs</a>
+          </li>
+          <li class="submenu-item">
+            <a routerLink="/hr/recommendedCourses" class="submenu-link">Recommended Courses</a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/projects" class="menu-link">
+          <i class="pi pi-folder"></i>
+          <span>Projects</span>
+          <i class="pi pi-chevron-down"></i>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/tasks" class="menu-link">
+          <i class="pi pi-check-square"></i>
+          <span>Tasks</span>
+          <i class="pi pi-chevron-down"></i>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/reporting" class="menu-link">
+          <i class="pi pi-file"></i>
+          <span>Reporting</span>
+          <i class="pi pi-chevron-down"></i>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/users" class="menu-link">
+          <i class="pi pi-users"></i>
+          <span>Users</span>
+          <i class="pi pi-chevron-down"></i>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/support" class="menu-link">
+          <i class="pi pi-question-circle"></i>
+          <span>Support</span>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a routerLink="/settings" class="menu-link">
+          <i class="pi pi-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="menu-footer">
+    <div class="user-info">
+      <img [src]="user?.path || 'assets/images/avatarr.png'" alt="User Avatar" class="user-avatar" />
+      <div class="user-details">
+        <span class="user-name">
+          {{ user?.name }}
+        </span>
+        <span class="user-email">{{ user?.email }}</span>
+      </div>
+      <button class="logout-btn" (click)="logOut()">
+        <i class="pi pi-sign-out"></i>
+      </button>
+    </div>
+  </div>
+</div>

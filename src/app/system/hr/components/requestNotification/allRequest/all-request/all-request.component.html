@@ -1,0 +1,63 @@
+<div class="all-request-container">
+  <h3 class="section-title">{{ getSectionTitle() }}</h3>
+
+  <!-- Loader -->
+  <p *ngIf="loading" class="text-center py-4">Loading...</p>
+
+  <!-- No Data -->
+  <p *ngIf="!loading && requests.length === 0" class="text-center py-4">
+    No requests found.
+  </p>
+
+  <!-- Annual / Permission Requests -->
+  <div class="request-list" *ngIf="!loading && requests.length > 0">
+    <div class="request-card" *ngFor="let item of requests">
+      <div class="request-left">
+        <div class="icon">
+          <i class="pi" [ngClass]="getIconClass()"></i>
+        </div>
+        <div class="request-info">
+          <p class="request-text" *ngIf="activeTab === 1">
+            <b>{{ item.candidateName }}</b> requested <b>{{ item.vacationName }}</b>
+            from {{ item.fromDate | date: 'dd-MM-yyyy' }} to {{ item.toDate | date: 'dd-MM-yyyy' }}
+          </p>
+
+          <p class="request-text" *ngIf="activeTab === requestNotificationType.Permission_Request">
+            <b>{{ item.candidateName }}</b> requested <b>{{ item.permissionName }}</b>
+            on {{ item.date | date: 'dd-MM-yyyy' }}
+            ({{ item.fromTime }} - {{ item.toTime }})
+          </p>
+
+
+          <span class="request-meta">
+            {{ item.manager || item.to }} ·
+            {{ item.createdDate ? (item.createdDate | date: 'dd-MM-yyyy hh:mm a') : '-' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="request-actions">
+        <button pButton icon="pi pi-check" class="p-button-rounded p-button-text p-button-success"></button>
+        <button pButton icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Info -->
+  <div class="pagination" *ngIf="requests.length > 0">
+    <span class="page-info">
+      Page {{ pageNumber }} of {{ getTotalPages() }}
+    </span>
+
+    <div class="pagination-buttons">
+      <button pButton class="p-button-outlined" [disabled]="pageNumber === 1"
+        (click)="pageNumber = pageNumber - 1; loadRequests()">
+        Previous
+      </button>
+      <button pButton class="p-button-outlined" [disabled]="pageNumber * rows >= totalRecords"
+        (click)="pageNumber = pageNumber + 1; loadRequests()">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

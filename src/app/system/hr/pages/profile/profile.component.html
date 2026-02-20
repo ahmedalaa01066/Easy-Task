@@ -1,0 +1,227 @@
+<div class="loading-container" *ngIf="apiStatus === ApiStatus.Loading">
+  <ng-lottie width="200px" height="200px" [options]="options"></ng-lottie>
+</div>
+<ng-container *ngIf="apiStatus === ApiStatus.Loaded">
+
+<div class="profile-page">
+
+  <!-- ===== Header ===== -->
+  <div class="profile-header-bg"></div>
+
+  <!-- كارت البروفايل -->
+  <p-card class="panel header-card" *ngIf="profile">
+    <div class="header">
+      <div class="left">
+        <div class="custom-avatar small">
+          <ng-container *ngIf="profile.candidateImage; else avatarFallback">
+            <img [src]="profile.candidateImage" alt="Profile" />
+          </ng-container>
+
+          <ng-template #avatarFallback>
+            <p-avatar [label]="getInitials(profile.firstName + ' ' + profile.lastName)" shape="circle" size="large"
+              styleClass="avatar-fallback">
+            </p-avatar>
+          </ng-template>
+        </div>
+
+        <div class="info">
+          <div class="top-line">
+            <h1 class="name">{{ profile.firstName }} {{ profile.lastName }}</h1>
+            <span class="custom-tag">{{ profile.positionName }}</span>
+          </div>
+          <p class="email">{{ profile.email }}</p>
+          <p class="desc" (click)="openEditBioDialog()">{{ profile.bio || 'No description available' }}</p>
+        </div>
+      </div>
+
+      <div class="edit-button-wrapper">
+        <button pButton label="Edit info" class="p-button-outlined p-button-sm" (click)="openEditDialog()"></button>
+      </div>
+    </div>
+  </p-card>
+
+
+
+
+  <!-- ===== Row: Left (Hierarchy + Documents + Info) | Right (Attendance + Annual) ===== -->
+  <div class="grid-2">
+    <!-- Left Column -->
+    <div class="left-col">
+      <!-- Hierarchy -->
+      <p-card class="panel ">
+        <div class="panel-header ">
+          <div class="title">
+            <span class="name">Hierarchy</span>
+            <span class="hierarchy-tag">{{profile.levelName}}</span>
+          </div>
+          <button pButton class="p-button-outlined p-button-sm px-2" type="button" label="Edit Hierarchy"
+            (click)="showEditHierarchyModal = true"></button>
+
+        </div>
+        <app-hierarchy *ngIf="profile" [candidateId]="profile.id"></app-hierarchy>
+      </p-card>
+
+      <!-- Documents -->
+      <p-card class="panel px-5">
+        <div class="panel-header">
+          <span class="name">Documents</span>
+          <button pButton label="Add Documents" class="p-button-outlined p-button-sm"
+            (click)="showAddDocumentModal = true"></button>
+        </div>
+      </p-card>
+
+      <!-- Personal Info -->
+      <p-card class="panel stretch-height">
+        <div class="panel-header">
+          <span class="name">KPIs</span>
+        </div>
+        <app-kpi-profile [candidateId]="profile.id"></app-kpi-profile>
+      </p-card>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-col">
+      <!-- Week Attendance -->
+     
+<app-attendance-list  [candidateId]="profile.id"></app-attendance-list>
+      <!-- Annual -->
+      <app-annual-draw [candidateId]="profile.id"></app-annual-draw>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+
+    <!-- Penalties -->
+    <p-card class="panel">
+      <div class="panel-header">
+        <span class="name">Penalties</span>
+
+        <button pButton type="button" label="Add new Penalty" class="p-button-outlined p-button-sm"
+          (click)="onAddPenalty()"></button>
+      </div>
+      <app-penalties-list [candidateId]="profile.id"></app-penalties-list>
+
+    </p-card>
+
+    <!-- Courses -->
+    <app-courses-list [candidateId]="profile.id"></app-courses-list>
+
+  </div>
+
+
+</div>
+
+
+<!-- Edit displayEditDialog -->
+<p-dialog header="Edit Candidate" [(visible)]="displayEditDialog" [modal]="true" styleClass="add-candidate-dialog"
+  [style]="{width: '600px'}" (onHide)="onDialogHide()">
+
+  <div class="candidate-form">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="fname">First Name</label>
+        <input id="fname" type="text" pInputText [(ngModel)]="editForm.firstName" class="form-input"
+          (blur)="generateEmail()" />
+      </div>
+
+      <div class="form-field">
+        <label for="lname">Last Name</label>
+        <input id="lname" type="text" pInputText [(ngModel)]="editForm.lastName" class="form-input"
+          (blur)="generateEmail()" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field my-2">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText [(ngModel)]="editForm.email" class="form-input" />
+      </div>
+
+      <div class="form-field my-2">
+        <label for="date">Joining Date</label>
+        <p-calendar id="date" [(ngModel)]="editForm.joiningDate" dateFormat="dd-mm-yy"
+          class="calendar-input"></p-calendar>
+
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field full-width-row my-1">
+        <label for="documents">Upload Documents</label>
+
+        <div class="upload-box full-width" (click)="fileInput.click()" (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.dragover]="isDragOver">
+
+          <input type="file" id="documents" #fileInput (change)="onFileSelected($event)" multiple
+            accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, video/*" hidden />
+
+
+          <img src="../../../../../assets/images/Featured icon.png">
+
+          <p>
+            <strong>Click to upload</strong> or drag and drop<br />
+          </p>
+        </div>
+
+        <ul class="uploaded-list" *ngIf="selectedFiles.length > 0">
+          <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+    <div class="form-row">
+      <div class="form-field my-2">
+        <label for="level">Hierarchy Level</label>
+        <p-dropdown id="level" [options]="levels" optionLabel="name" optionValue="id" [(ngModel)]="editForm.levelId"
+          class="form-input dropdown-input"></p-dropdown>
+      </div>
+
+      <div class="form-field my-2">
+        <label for="status">Status</label>
+        <p-dropdown id="status" [options]="statuses" optionLabel="label" optionValue="id"
+          [(ngModel)]="editForm.candidateStatus" class="form-input dropdown-input">
+        </p-dropdown>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="displayEditDialog=false"
+        class="cancel-btn"></p-button>
+      <p-button label="Save" (onClick)="saveProfileEdit()" class="save-btn"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Add Candidate Modal -->
+<app-add-penalty [(visible)]="showAddPenaltyModal" [candidateId]="profile.id" (penaltyAdded)="onPenaltyAdded($event)">
+</app-add-penalty>
+
+<!-- Add Document Modal -->
+<app-add-document *ngIf="profile" [(visible)]="showAddDocumentModal" [candidateId]="profile.id"
+  [documentId]="profile.documentId" (documentAdded)="onDocumentAdded($event)">
+</app-add-document>
+<!-- edit Hierarchy Modal -->
+
+<app-edit-hierarachy [(visible)]="showEditHierarchyModal" [candidateId]="profile.id" [levelId]="profile.levelId"
+  (hierarchyEdit)="onHierarchyEdit($event)"></app-edit-hierarachy>
+
+<!-- Dialog خاص بتعديل الـ Bio -->
+<p-dialog header="Edit Bio" [(visible)]="displayEditBioDialog" [modal]="true" [style]="{width: '500px'}">
+  <div class="form-field full-width-row">
+    <label for="bio">Bio</label>
+    <textarea id="bio" pInputTextarea rows="5" [(ngModel)]="editForm.bio" class="form-input">
+</textarea>
+
+
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="displayEditBioDialog=false"></p-button>
+    <p-button label="Save" (onClick)="saveBio()" class="save-btn"></p-button>
+  </ng-template>
+</p-dialog>
+</ng-container>

@@ -1,0 +1,22 @@
+<div class="candidates-page">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="title-section">
+                <h1 class="page-title">Rates & KPIs</h1>
+                <p class="page-subtitle">View your candidates kpis</p>
+            </div>
+            <p-button label="Default KPIs" [routerLink]="'/hr/default-Kpi'"></p-button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-management mb-4 position-relative w-50">
+            <i class="pi pi-search search-icon"></i>
+            <input type="text" placeholder="Search for Candidates" [(ngModel)]="searchTerm" class="form-control ps-5" />
+        </div>
+    </div>
+
+    <div class="page-content">
+        <app-kpi-list [searchTerm]="searchTerm"></app-kpi-list>
+    </div>
+</div>

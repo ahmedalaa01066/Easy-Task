@@ -1,0 +1,172 @@
+<div class="attend-details">
+
+    <!-- ====== Header ====== -->
+    <div class="attend-header">
+        <button class="back-btn" routerLink="/hr/attendance">←</button>
+
+        <div class="user-info">
+            <div class="user-name-role">
+                <h2 class="user-name">{{ user?.name }}</h2>
+                <span class="user-role">{{ user?.role }}</span>
+            </div>
+            <p class="user-email">{{ user?.email }}</p>
+        </div>
+
+        <button class="edit-btn" (click)="openEditDialog()">Edit Attendance Activation</button>
+    </div>
+
+
+    <!-- ====== Assigned Shifts ====== -->
+    <div class="assigned-shifts card">
+        <h3>Assigned Shifts</h3>
+        <div class="shifts-content">
+            <!-- Progress Circle -->
+            <div class="circle-progress" [style.--percent]="progressPercentage">
+                <div class="circle-inner">
+                    <span>{{ workedHours }}</span>
+                </div>
+            </div>
+
+            <!-- Shifts List -->
+            <div class="shifts-list">
+                <div class="shift-item" *ngFor="let shift of shifts" [ngClass]="{ 'active-shift': shift.attendanceId }">
+                    <div class="shift-info">
+                        <strong>{{ shift.shiftName }}</strong>
+                        <p>
+                            {{ shift.startDate | date: 'hh:mm a' }} -
+                            {{ shift.endDate | date: 'hh:mm a' }}
+                        </p>
+                    </div>
+
+                    <div class="shift-actions">
+                        <ng-container *ngIf="shift.attendanceId">
+                            <button *ngIf="shift.pauseId" class="pause-btn" (click)="stopPauseShift(shift)">
+                                <img class="px-1" src="/assets/images/play.png" /> Stop Pause
+                            </button>
+
+                            <button *ngIf="!shift.pauseId" class="pause-btn" (click)="startPauseShift(shift)">
+                                <img class="px-1" src="/assets/images/pause.png" /> Start Pause
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!shift.attendanceId">
+                            <button class="unassign-btn" (click)="onUnassignShift(shift)">
+                                <img class="px-1" src="/assets/images/arrow-left-05.png" />Unassign
+                            </button>
+                        </ng-container>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ====== Shift Log ====== -->
+    <div class="shift-log card">
+        <div class="log-header">
+            <h3>Shift Log</h3>
+            <div class="filters">
+                <input type="date" [(ngModel)]="fromDate" placeholder="From">
+                <input type="date" [(ngModel)]="toDate" placeholder="To">
+                <button class="nav-btn" (click)="loadShiftLogs()">Search</button>
+            </div>
+
+        </div>
+
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>Shift Log</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of shiftLogs">
+                    <td>{{ log.log }}</td>
+                    <td>{{ log.time }}</td>
+                    <td>{{ log.date | date:'dd-MM-yyyy' }}</td>
+                    <!-- <td>
+                        <img src="assets/images/edit.png" alt="edit" class="edit-icon">
+                    </td> -->
+                </tr>
+            </tbody>
+
+
+        </table>
+        <div class="pagination-container">
+            <span class="page-text">
+                Page {{ currentPage }} of {{ totalPages }}
+            </span>
+
+            <div class="pagination-buttons">
+                <button class="nav-btn" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+                <button class="nav-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+<p-dialog header="Edit Attendence Activation" [(visible)]="isEditDialogVisible" [modal]="true"
+    [style]="{width: '550px'}" [closable]="true" [dismissableMask]="true">
+    <!-- Dialog content same as image -->
+    <div class="dialog-content">
+        <div class="user-info-header">
+            <img [src]="user.image || 'assets/images/Avatar.png'" alt="Profile" class="w-40 h-40" />
+            <div class="user-info">
+                <div class="user-name-role">
+                    <h2 class="user-name">{{ user.name }}</h2>
+                    <span class="user-role">{{ user.role }}</span>
+                </div>
+                <p class="user-email">{{ user.email }}</p>
+            </div>
+        </div>
+
+
+        <div class="attendance-settings">
+            <h4 class="attendance-title">
+                <img src="/assets/images/zap.png" />
+                Attendance Activation
+            </h4>
+
+            <div class="attendance-activation">
+                <label class="radio-option" [class.active]="attendanceActivation == 2">
+                    <input type="radio" name="attendanceActivation" [(ngModel)]="attendanceActivation" [value]="2" />
+                    <span>By Location</span>
+                </label>
+
+                <label class="radio-option" [class.active]="attendanceActivation == 1">
+                    <input type="radio" name="attendanceActivation" [(ngModel)]="attendanceActivation" [value]="1" />
+                    <span>By First Login</span>
+                </label>
+
+                <label class="radio-option" [class.active]="attendanceActivation == 3">
+                    <input type="radio" name="attendanceActivation" [(ngModel)]="attendanceActivation" [value]="3" />
+                    <span>By Login Time</span>
+                </label>
+            </div>
+
+
+        </div>
+
+        <div class="dialog-actions">
+            <button class="btn-cancel" pButton (click)="isEditDialogVisible = false">Cancel</button>
+            <button class="btn-save" (click)="saveActivation()">Save</button>
+        </div>
+
+
+    </div>
+</p-dialog>

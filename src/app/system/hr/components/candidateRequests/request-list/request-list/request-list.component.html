@@ -1,0 +1,91 @@
+<div class="all-request-container">
+  <div class="header-row">
+    <h3 class="section-title">Requests</h3>
+
+    <p-dropdown [options]="statuses" [(ngModel)]="selectedStatus" placeholder="Select Status"
+      (onChange)="loadRequests()" class="status-dropdown">
+    </p-dropdown>
+
+  </div>
+
+  <div class="request-list">
+    <div class="request-card" *ngFor="let item of items; let i = index">
+      <ng-container *ngIf="activeTab === candidateRequestType.Permission_Request; else vacationTemplate">
+        <div class="request-left">
+          <div class="icon">
+            <i class="pi pi-clock"></i>
+          </div>
+          <div class="request-info">
+            <p class="request-text">
+              Permission Reuest ({{ item.permissionName }}) on {{ item.date | date:'dd-MM-yyyy' }}
+
+            </p>
+            <span class="request-meta">
+              By {{ item.candidateName }} from {{ item.fromTime }} to {{ item.toTime }}
+            </span>
+          </div>
+        </div>
+
+        <div class="request-actions">
+          <span class="status-badge" [ngClass]="{
+          'pending': item.status === 1,
+          'first-approval': item.status === 2,
+          'second-approval': item.status === 3,
+          'rejected': item.status === 4
+        }">
+            {{ getStatusLabel(item.status) }}
+          </span>
+          <button type="button" pButton icon="pi pi-ellipsis-v" class="menu-btn"   (click)="setCurrentItem(item); menu.toggle($event)"></button>
+          <p-menu #menu [popup]="true" [model]="menuItems" class="plain-menu"></p-menu>
+        </div>
+      </ng-container>
+
+      <!-- لو Vacation -->
+      <ng-template #vacationTemplate>
+        <div class="request-left">
+          <div class="icon">
+            <i [ngClass]="i % 2 === 0 ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          </div>
+          <div class="request-info">
+            <p class="request-text">
+              Annual request ({{ item.vacationName }}) from {{ item.fromDate | date:'dd-MM-yyyy' }}
+              to {{ item.toDate | date:'dd-MM-yyyy' }}
+            </p>
+            <span class="request-meta">
+              To {{ item.manager }} · {{ item.createdDate | date:'dd-MM-yyyy hh:mm a' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="request-actions">
+          <span class="status-badge" [ngClass]="{
+          'pending': item.vacationRequestType === 1,
+          'first-approval': item.vacationRequestType === 2,
+          'second-approval': item.vacationRequestType === 3,
+          'rejected': item.vacationRequestType === 4
+        }">
+            {{ getStatusLabel(item.vacationRequestType) }}
+          </span>
+          <button type="button" pButton icon="pi pi-ellipsis-v" class="menu-btn"
+            (click)="setCurrentItem(item); menu.toggle($event)"></button>
+          <p-menu #menu [popup]="true" [model]="menuItems" class="plain-menu"></p-menu>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <div class="pagination">
+    <span class="page-info">Page {{ pageNumber }} of {{ totalPages }}</span>
+    <div class="pagination-buttons">
+      <button pButton class="p-button-outlined" (click)="prevPage()" [disabled]="pageNumber === 1">
+        Previous
+      </button>
+
+      <button pButton class="p-button-outlined" (click)="nextPage()" [disabled]="pageNumber === totalPages">
+        Next
+      </button>
+    </div>
+  </div>
+
+</div>

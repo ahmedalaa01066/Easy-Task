@@ -1,0 +1,66 @@
+/* Dialog Container */
+/* Forms */
+.request-form,
+.permission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* عمودين متساويين */
+  gap: 16px; /* مسافة بين العمودين */
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 1rem;
+}
+
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  height: 40px;
+  color: #111827;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #12a0c7;
+  box-shadow: 0 0 0 3px rgba(26, 168, 216, 0.15);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* Responsive */
+@media (max-width: 640px) {
+  .request-form,
+  .permission-form {
+    gap: 14px;
+  }
+}
+
+
