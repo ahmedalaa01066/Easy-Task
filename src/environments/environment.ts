@@ -4,6 +4,5 @@ export const environment = {
   // api:`https://ecommerce.tahwisha.com`   //remote
 
   api: `http://api.taskverra.com`,      //local
-  //  api: `http://api.taskverra.com`,      //local
-
+  
 };
