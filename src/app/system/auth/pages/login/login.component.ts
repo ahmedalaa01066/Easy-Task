@@ -25,7 +25,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) return;
+    // if (this.loginForm.invalid) return;
 
     this.loading = true;
     this.errorMessage = '';
