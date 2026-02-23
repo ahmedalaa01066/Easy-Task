@@ -1,0 +1,61 @@
+<div class="candidates-table-container">
+    <!-- Table Header -->
+    <div class="table-header">
+        <h3 class="table-title">Created Vacations</h3>
+    </div>
+
+    <!-- Data Table -->
+    <p-table [value]="vacations" [scrollable]="true" scrollHeight="600px" [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="candidates-table">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Vacation Name</th>
+                <th>Remanning Days</th>
+                <th>Max Request number/year</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-vacation>
+            <tr>
+                <td>{{ vacation.candidateName }}</td>
+                <td>{{ vacation.vacationName }}</td>
+                <td>{{vacation.counter}} Day</td>
+                <td>
+                    {{ vacation.maxRequestNum }} Request
+                </td>
+
+                <td>
+                    <img class="mx-1" style="width: 20px;" src="../../../../../assets/images/edit.png"
+                        (click)="editVacation(vacation)" alt="Edit">
+                   
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3" class="empty-message">No Vacations found</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Custom Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+  <span class="page-info">
+    Page {{ pageIndex }} of {{ totalPages }}
+  </span>
+  <div class="page-controls">
+    <button class="page-btn" (click)="Previous()" [disabled]="pageIndex === 1">
+      Previous
+    </button>
+    <button class="page-btn" (click)="Next()" [disabled]="pageIndex === totalPages">
+      Next
+    </button>
+  </div>
+</div>
+
+</div>
+
