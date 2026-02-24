@@ -30,7 +30,7 @@
                 <td>
                     <img class="mx-1" style="width: 20px;" src="../../../../../assets/images/edit.png"
                         (click)="editVacation(vacation)" alt="Edit">
-                   
+
                 </td>
             </tr>
         </ng-template>
@@ -44,18 +44,66 @@
 
     <!-- Custom Pagination -->
     <div class="pagination-wrapper" *ngIf="totalPages > 1">
-  <span class="page-info">
-    Page {{ pageIndex }} of {{ totalPages }}
-  </span>
-  <div class="page-controls">
-    <button class="page-btn" (click)="Previous()" [disabled]="pageIndex === 1">
-      Previous
-    </button>
-    <button class="page-btn" (click)="Next()" [disabled]="pageIndex === totalPages">
-      Next
-    </button>
-  </div>
-</div>
+        <span class="page-info">
+            Page {{ pageIndex }} of {{ totalPages }}
+        </span>
+        <div class="page-controls">
+            <button class="page-btn" (click)="Previous()" [disabled]="pageIndex === 1">
+                Previous
+            </button>
+            <button class="page-btn" (click)="Next()" [disabled]="pageIndex === totalPages">
+                Next
+            </button>
+        </div>
+    </div>
 
 </div>
 
+<p-dialog
+  [(visible)]="visible"
+  header="Remaining days"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="edit-vacation-dialog"
+  [style]="{ width: '600px' }"
+>
+  <form [formGroup]="editForm" class="dialog-body">
+
+    <div class="field-group">
+      <label class="field-label">Remaining Days</label>
+
+      <input
+        type="number"
+        pInputText
+        formControlName="counter"
+        class="days-input"
+      />
+    </div>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer-custom">
+
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-outlined cancel-btn"
+        (click)="visible=false">
+      </button>
+
+      <button
+        pButton
+        type="button"
+        label="Save"
+        class="save-btn"
+        (click)="saveEdit()"
+        [disabled]="editForm.invalid">
+      </button>
+
+    </div>
+  </ng-template>
+</p-dialog>

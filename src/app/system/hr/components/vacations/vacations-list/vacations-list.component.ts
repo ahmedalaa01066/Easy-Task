@@ -15,7 +15,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { CRUDIndexPage } from 'src/app/shared/interfaces/crud-index.model';
 import { VacationsService } from '../../../services/vacations/vacations.service';
-
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-vacations-list',
   templateUrl: './vacations-list.component.html',
@@ -32,6 +32,7 @@ import { VacationsService } from '../../../services/vacations/vacations.service'
     FormsModule,
     DialogModule,
     DropdownModule,
+    ReactiveFormsModule,
   ],
 })
 export class VacationsListComponent {
@@ -48,11 +49,17 @@ export class VacationsListComponent {
   selectedItem: VacationsVM | null = null;
   showAddPositionModal: boolean = false;
   editingVacation: any = null;
-
-  constructor(private _vacationsService: VacationsService) {}
+editForm!: FormGroup;
+visible = false;
+editingVacationId!: string;
+  constructor(private _vacationsService: VacationsService ,  private fb: FormBuilder
+) {}
 
   ngOnInit() {
     this.loadVacations();
+     this.editForm = this.fb.group({
+    counter: [null, Validators.required]
+  });
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchTerm']) {
@@ -110,8 +117,29 @@ export class VacationsListComponent {
     }
   }
 
-  editVacation(vacation: any) {
-    this.editingVacation = vacation; // مرر الـ vacation للـ form
-    this.showAddPositionModal = true;
-  }
+editVacation(vacation: any) {
+  this.editingVacationId = vacation.id;
+
+  this.editForm.patchValue({
+    counter: vacation.counter
+  });
+
+  this.visible = true;
+}
+saveEdit() {
+  if (this.editForm.invalid) return;
+
+  const payload = {
+    id: this.editingVacationId,
+    counter: this.editForm.value.counter
+  };
+
+  this._vacationsService.editVacation(payload).subscribe({
+    next: () => {
+      this.visible = false;
+      this.loadVacations();
+    },
+    error: (err) => console.error(err)
+  });
+}
 }

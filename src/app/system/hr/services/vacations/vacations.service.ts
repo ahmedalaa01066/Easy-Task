@@ -29,7 +29,7 @@ export class VacationsService {
     );
   }
   editVacation(editVacationViewModel: editVacationVM) {
-    return this._apiService.post(
+    return this._apiService.update(
       `/UpdateCandidateVacationDaysEndpoint/UpdateCandidateVacationDays`,
       editVacationViewModel
     );
