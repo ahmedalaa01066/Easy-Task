@@ -1,79 +1,50 @@
 <p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false"
-  (onHide)="visibleChange.emit(false)" styleClass="add-candidate-dialog" header="Permissions"
-  [style]="{ width: '700px',height :'350px' }">
+  (onHide)="visibleChange.emit(false)" styleClass="permission-dialog" [header]="dialogTitle"
+  [style]="{ width: '700px' }">
+  <form [formGroup]="permissiomForm" class="permission-form">
 
-  <!-- Steps Navigation -->
-  <div class="steps-container">
-    <div class="custom-steps">
-      <!-- Step 1 -->
-      <div class="step-item d-flex align-items-right flex-row" [class.active]="currentStep >= 0"
-        [class.completed]="currentStep > 0">
-
-        <div class="step-indicator mb-0 me-2">
-          <i *ngIf="currentStep > 0" class="pi pi-check"></i>
-          <span *ngIf="currentStep === 0 || currentStep < 0">1</span>
-        </div>
-        <p class="step-title mb-0">Select Name</p>
-      </div>
-
-      <!-- Chevron -->
-      <div class="step-connector" [class.completed]="currentStep > 0">
-        <img src="assets/images/chevrons-right.svg" alt="chevron-right" />
-      </div>
-
-      <!-- Step 2 -->
-      <div class="step-item d-flex align-items-center flex-row" [class.active]="currentStep >= 1"
-        [class.completed]="currentStep > 1">
-        <div class="step-indicator mb-0 me-2">
-          <i *ngIf="currentStep > 1" class="pi pi-check"></i>
-          <span *ngIf="currentStep === 1 || currentStep < 1">2</span>
-        </div>
-        <p class="step-title mb-0">Assign Permissions</p>
-      </div>
+    <!-- Name -->
+    <div class="form-group full-width">
+      <label>Name</label>
+      <input pInputText type="text" formControlName="name" placeholder="Name" />
     </div>
-  </div>
 
-  <!-- Form Section -->
-  <div class="candidate-form">
-    <div class="form-step" *ngIf="currentStep === 0">
-      <div class="form-field dropdown-input">
-        <label for="candidate">Candidate Name</label>
-        <p-dropdown [options]="candidateList" [(ngModel)]="selectedCandidate" optionLabel="name"
-          placeholder="Select candidate">
-        </p-dropdown>
+    <!-- Row 2 -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Max Hours</label>
+        <input pInputText type="number" formControlName="maxHours" placeholder="Max Hours" />
+      </div>
+
+      <div class="form-group">
+        <label>Min Hours</label>
+        <input pInputText type="number" formControlName="minHours" placeholder="Min Hours" />
+
+        <small class="error-message" *ngIf="permissiomForm.errors?.['minGreaterThanMax']">
+          Min Hours cannot be greater than Max Hours
+        </small>
       </div>
     </div>
 
-    <!-- Assign Permissions Step -->
-    <div class="form-step" *ngIf="currentStep === 1">
-      <div class="permissions-grid">
-        <div class="permission-item" *ngFor="let perm of permissionsList">
-          <label>{{ perm.label }}</label>
-          <p-inputSwitch [(ngModel)]="perm.value"></p-inputSwitch>
-        </div>
+    <!-- Row 3 -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Max Request Times</label>
+        <input pInputText type="number" formControlName="maxRepeatTimes" placeholder="Max Request Times" />
+      </div>
+
+      <div class="form-group">
+        <label>Max Hours/Month</label>
+        <input pInputText type="number" formControlName="maxHoursPerMonth" placeholder="Max Hours/Month" />
       </div>
     </div>
 
-  </div>
+  </form>
 
-  <div class="dialog-footer">
-    <button class="cancel-btn p-button" (click)="onCancel()">Cancel</button>
+  <ng-template pTemplate="footer">
+    <button pButton label="Cancel" class="p-button-outlined" (click)="onCancel()"></button>
 
-    <!-- زر "رجوع" -->
-    <button class="cancel-btn p-button" *ngIf="currentStep === 1" (click)="currentStep = 0">
-      Back
-    </button>
-
-    <!-- زر "التالي" -->
-    <button class="save-btn p-button" *ngIf="currentStep === 0" (click)="onNext()" [disabled]="!selectedCandidate">
-      Next
-    </button>
-
-    <!-- زر "حفظ" -->
-    <button class="save-btn p-button" *ngIf="currentStep === 1" (click)="onSave()">
-      Save
-    </button>
-  </div>
-
-
+    <button pButton label="Save" class="p-button-primary" [disabled]="permissiomForm.invalid"
+      (click)="onSubmit()"></button>
+  </ng-template>
 </p-dialog>

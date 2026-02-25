@@ -1,15 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { FileUploadModule } from 'primeng/fileupload';
+import { OnChanges, SimpleChanges } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { CreatePermissionViewModel } from 'src/app/system/hr/models/interfaces/permissions-vm';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { PermissionsService } from 'src/app/system/hr/services/Permissions/permissions.service';
+export function minLessThanMaxValidator(): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const min = group.get('minHours')?.value;
+    const max = group.get('maxHours')?.value;
 
+    if (min != null && max != null && min > max) {
+      return { minGreaterThanMax: true };
+    }
+
+    return null;
+  };
+}
 @Component({
   selector: 'app-add-permission',
   templateUrl: './add-permission.component.html',
@@ -22,24 +31,38 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     DialogModule,
     ButtonModule,
     InputTextModule,
-    CalendarModule,
-    FileUploadModule,
-    DropdownModule,
-    InputSwitchModule,
   ],
 })
-export class AddPermissionComponent {
-  // @Input() visible: boolean = false;
+export class AddPermissionComponent implements OnChanges {
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() permissionAdded = new EventEmitter<CreatePermissionViewModel>();
-  currentStep: number = 0;
+  @Output() permissionSaved = new EventEmitter<void>();
+
+  @Input() permissionData: CreatePermissionViewModel | null = null;
+
   private _visible: boolean = false;
+  permissiomForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private _permissionService: PermissionsService) {
+    this.permissiomForm = this.createForm();
+  }
 
   @Input()
   set visible(val: boolean) {
     this._visible = val;
     if (val) {
-      this.currentStep = 0; 
+      // Fill form with existing data if editing
+      if (this.permissionData) {
+        this.permissiomForm.patchValue({ ...this.permissionData });
+      } else {
+        this.permissiomForm.reset({
+          id: '',
+          name: '',
+          maxHours: null,
+          minHours: null,
+          maxRepeatTimes: null,
+          maxHoursPerMonth: null,
+        });
+      }
     }
   }
 
@@ -47,45 +70,54 @@ export class AddPermissionComponent {
     return this._visible;
   }
 
-
-  candidateList = [
-    { name: 'Ahmed Mohamed', value: 1 },
-    { name: 'Sara Ali', value: 2 },
-  ];
-  permissionsList = [
-    { label: 'Edit Project', value: false },
-    { label: 'View Project', value: false },
-    { label: 'Delete Project', value: false },
-    { label: 'Export Project', value: false },
-    { label: 'Share Project', value: false },
-    { label: 'Duplicate Project', value: false },
-    { label: 'Archive Project', value: false },
-    { label: 'Import Project', value: false },
-    { label: 'Restore Project', value: false },
-    { label: 'Rename Project', value: false },
-    { label: 'Move Project', value: false },
-    { label: 'Clone Project', value: false },
-    { label: 'Assign Task', value: false },
-    { label: 'Set Due Date', value: false },
-    { label: 'Notify Team', value: false },
-  ];
-
-  selectedCandidate: any = null;
-
+  createForm(): FormGroup {
+    return this.fb.group(
+      {
+        id: [''],
+        name: ['', Validators.required],
+        maxHours: [null, Validators.required],
+        minHours: [null, Validators.required],
+        maxRepeatTimes: [null, Validators.required],
+        maxHoursPerMonth: [null, Validators.required],
+      },
+      {
+        validators: minLessThanMaxValidator()
+      }
+    );
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['permissionData'] && this.permissionData) {
+      this.permissiomForm.patchValue({ ...this.permissionData });
+    }
+  }
   onCancel() {
-    this.visible = false;
+    this.permissiomForm.reset();
+    this.permissionData = null;
+    this.visibleChange.emit(false);
   }
 
-  onSave() {
-    console.log('Selected Candidate:', this.selectedCandidate);
-    this.visible = false;
-  }
-  onNext() {
-    if (this.selectedCandidate) {
-      this.currentStep = 1;
+  onSubmit() {
+    if (this.permissiomForm.valid) {
+      const payload: CreatePermissionViewModel = this.permissiomForm.value;
+
+      this._permissionService.postOrUpdateCandidate(payload).subscribe({
+        next: (res) => {
+            this._permissionService.getAllPermissions.emit(); 
+          this.permissionSaved.emit()
+          this.permissiomForm.reset();
+          this.permissionData = null;
+          this.visible = false;
+          this.visibleChange.emit(false);
+          
+        },
+        error: (err) => {
+          console.error('Error saving permission:', err);
+        },
+      });
     }
   }
 
-
-
+  get dialogTitle(): string {
+    return this.permissionData ? 'Edit Permission' : 'Create Permission';
+  }
 }
