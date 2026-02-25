@@ -19,6 +19,7 @@ import { AttendDetailsComponent } from './components/attendance/attend-details/a
 import { CandidateRequestsComponent } from './pages/candidate-requests/candidate-requests.component';
 import { RequestNotificationComponent } from './pages/request-notification/request-notification.component';
 import { DashboardComponent } from './pages/dashboad/dashboard/dashboard.component';
+import { VacationsComponent } from './pages/vacations/vacations.component';
 
 const routes: Routes = [
   {
@@ -99,6 +100,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component:DashboardComponent,
+  },
+   {
+    path: 'vacations',
+    component:VacationsComponent,
   },
 ];
 

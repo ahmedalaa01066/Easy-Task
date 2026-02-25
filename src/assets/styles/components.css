@@ -841,3 +841,6 @@ border: 1px solid #414651 !important;
   justify-content: center;
 }
 
+.edit-vacation-dialog .p-dialog-footer {
+  padding: 0 !important;
+}
