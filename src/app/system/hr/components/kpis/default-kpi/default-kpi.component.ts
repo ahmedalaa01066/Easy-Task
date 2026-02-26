@@ -108,7 +108,12 @@ selectedItem: defaultKpiViewModel | null = null;
       next: (res) => {
         console.log('✅ KPI created:', res);
         this.displayDialog = false;
-        this.loadData();
+        
+        // Clear cache so loadData fetches fresh data
+        delete this.cache[this.pageIndex];
+        
+        this.loadData(this.pageIndex);
+        console.log('Clearing newKpi form');
         this.newKpi = { name: '', type: null, percentage: null };
       },
       error: (err) => {
