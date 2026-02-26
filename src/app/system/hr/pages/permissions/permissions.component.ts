@@ -14,29 +14,44 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.css'],
   standalone: true,
-    providers: [HrService, SharedService],
-    imports: [
-      CommonModule,
-      ButtonModule,
-      TabMenuModule,
-      FormsModule,
-      PermissionListComponent,
-      AddPermissionComponent
-    ],
+  providers: [HrService, SharedService],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    TabMenuModule,
+    FormsModule,
+    PermissionListComponent,
+    AddPermissionComponent
+  ],
 })
 export class PermissionsComponent {
   showAddPermissionModal: boolean = false;
-  searchTerm: string = ''; 
-
+  searchTerm: string = '';
+  selectedPermission: any = null;
+  onSearchChange(value: string) {
+    this.searchTerm = value;
+  }
   onAddPermission(): void {
-      this.showAddPermissionModal = true;
-    }
-  
-    /**
-     * Handle candidate creation from modal
-     * @param permissionData - The candidate form data
-     */
-    onPermissionAdded(permissionData: CreatePermissionViewModel): void {
-      this.showAddPermissionModal = false;
-    }
+    this.showAddPermissionModal = true;
+  }
+
+  /**
+   * Handle candidate creation from modal
+   * @param permissionData - The candidate form data
+   */
+  onPermissionAdded(permissionData: CreatePermissionViewModel): void {
+    this.showAddPermissionModal = false;
+  }
+
+  onEditPermission(permission: any) {
+    this.selectedPermission = permission;
+    this.showAddPermissionModal = true;
+  }
+  onDialogClose(val: boolean) {
+  this.showAddPermissionModal = val;
+
+  if (!val) {
+    this.selectedPermission = null; 
+  }
+}
 }

@@ -6,34 +6,26 @@
         <h1 class="page-title">Permissions</h1>
         <p class="page-subtitle">View your permissions</p>
       </div>
-      
+
       <div class="action-buttons">
-        <p-button 
-          icon="pi pi-plus" 
-          label="Add User Permission" 
-          (onClick)="onAddPermission()">
+        <p-button icon="pi pi-plus" label="Add User Permission" (onClick)="onAddPermission()">
         </p-button>
       </div>
     </div>
-       <div class="search-management mb-4 position-relative w-50">
+    <div class="search-management mb-4 position-relative w-50">
       <i class="pi pi-search search-icon"></i>
-      <input
-        type="text"
-        placeholder="Search for permission"
-        [(ngModel)]="searchTerm"
-        class="form-control ps-5"
-      />
+      <input type="text" placeholder="Search for permission" [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange($event)" class="form-control ps-5" />
     </div>
   </div>
-  
+
   <!-- Content Section -->
   <div class="page-content">
-    <app-permission-list [searchTerm]="searchTerm"></app-permission-list>
+    <app-permission-list [searchTerm]="searchTerm" (editClicked)="onEditPermission($event)"></app-permission-list>
   </div>
-  
+
   <!-- Add Candidate Modal -->
-  <app-add-permission
-    [(visible)]="showAddPermissionModal"
-    (permissionAdded)="onPermissionAdded($event)">
+  <app-add-permission [visible]="showAddPermissionModal" (visibleChange)="onDialogClose($event)"
+    [permissionData]="selectedPermission" (permissionSaved)="onPermissionAdded($event)">
   </app-add-permission>
 </div>
