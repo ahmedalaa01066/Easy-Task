@@ -72,7 +72,7 @@
 
       <div class="form-field">
         <label for="phoneNumber">Phone Number <span class="error-message">*</span></label>
-        <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber" placeholder="Phone Number"
+        <input id="phoneNumber" type="number" pInputText formControlName="phoneNumber" placeholder="Phone Number"
           class="form-input" />
         <small *ngIf="candidateForm.get('phoneNumber')?.invalid && candidateForm.get('phoneNumber')?.touched"
           class="error-message">
@@ -296,14 +296,14 @@
   <ng-template pTemplate="footer">
     <div class="dialog-footer">
       <div class="footer-right">
-        <p-button *ngIf="currentStep > 0 && currentStep < 2" label="Back" [text]="true" severity="secondary"
+        <p-button *ngIf="currentStep > 0 " label="Back" [text]="true" severity="secondary"
           (onClick)="previousStep()" class="back-btn">
         </p-button>
 
         <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="cancel()" class="cancel-btn">
         </p-button>
 
-        <p-button *ngIf="currentStep < 1" label="Next" severity="primary" [disabled]="!isCurrentStepValid()"
+        <p-button *ngIf="currentStep < 2" label="Next" severity="primary" [disabled]="!isCurrentStepValid()"
           (onClick)="nextStep()" class="next-btn">
         </p-button>
 
@@ -311,7 +311,7 @@
           (onClick)="nextStep()" class="next-btn">
         </p-button> -->
 
-        <p-button *ngIf="currentStep === 1" label="Save" severity="primary" type="button"
+        <p-button *ngIf="currentStep > 1" label="Save" severity="primary" type="button"
           [disabled]="!candidateForm.valid" (onClick)="onSubmit()" class="save-btn">
         </p-button>
         <p-button *ngIf="showAttachSaveButton" label="Save Attachments" severity="success" (onClick)="saveAttachments()"

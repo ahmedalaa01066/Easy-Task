@@ -20,7 +20,7 @@ export class SearchCandidateViewModel {
   candidateStatus: number;
 }
 export interface CreateCandidateViewModel {
-  id: string;
+  id?: string;
   firstName: string;
   LastName: string;
   password: string;

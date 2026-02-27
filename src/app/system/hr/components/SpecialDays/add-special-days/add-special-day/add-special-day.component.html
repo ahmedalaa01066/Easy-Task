@@ -3,7 +3,7 @@
   <form [formGroup]="specialDayForm" class="special-day-form">
     <!-- Special Day Name -->
     <div class="form-group">
-      <label for="name">Special Day Name</label>
+      <label for="name">Special Day Name <span class="error">*</span></label>
       <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter name" />
       <small class="error" *ngIf="specialDayForm.get('name')?.invalid && specialDayForm.get('name')?.touched">
         Name is required
