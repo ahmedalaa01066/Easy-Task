@@ -83,12 +83,12 @@
 }
 
 .submenu.expanded {
-  max-height: 460px;
+  max-height: 537px;
 }
 
-/* .submenu-item {
+.submenu-item {
   margin-bottom: 2px;
-} */
+}
 
 .submenu-link {
   display: block;
