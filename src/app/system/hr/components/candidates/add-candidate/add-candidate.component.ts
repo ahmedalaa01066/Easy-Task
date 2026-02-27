@@ -79,6 +79,7 @@ export class AddCandidateComponent implements OnInit {
   candidateStatusOptions = [
     { name: 'Resigned', id: 1 },
     { name: 'Active', id: 2 },
+    { name: 'Training', id: 3 },
   ];
 
   ngOnInit(): void {
@@ -126,7 +127,7 @@ export class AddCandidateComponent implements OnInit {
         ],
         phoneNumber: [
           '',
-          [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
+          [Validators.required],
         ],
         email: ['', [Validators.required, Validators.email]],
         joiningDate: [null, Validators.required],
@@ -248,7 +249,6 @@ export class AddCandidateComponent implements OnInit {
       //   .filter((d) => d.uploaded)
       //   .map((d) => d.src);
       const payload: CreateCandidateViewModel = {
-        id: '',
         firstName: formData.firstName,
         LastName: formData.lastName,
         password: formData.password,
