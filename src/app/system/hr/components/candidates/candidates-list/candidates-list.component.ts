@@ -6,6 +6,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 import {
   CandidateViewModel,
   SearchCandidateViewModel,
@@ -31,6 +35,10 @@ import { CandidateService } from '../../../services/candidate/candidate.service'
     AvatarModule,
     ButtonModule,
     MenuModule,
+    InputTextModule,
+    MultiSelectModule,
+    DropdownModule,
+    FormsModule,
   ],
 })
 export class CandidatesListComponent implements OnChanges {
@@ -48,6 +56,13 @@ export class CandidatesListComponent implements OnChanges {
   rows: number = 50;
   pageNumber: number = 1;
   first: number = 0;
+  
+  // Filter properties
+  globalFilterValue: string = '';
+  statusOptions: any[] = [
+    { label: 'Active', value: CandidateStatus.ACTIVE },
+    { label: 'Resigned', value: CandidateStatus.RESIGNED }
+  ];
 
   // Menu items for actions
   menuItems: MenuItem[] = [
@@ -145,6 +160,22 @@ export class CandidatesListComponent implements OnChanges {
     this.rows = event.rows;
     this.pageNumber = Math.ceil((this.first + 1) / this.rows);
     this.loadCandidates();
+  }
+
+  /**
+   * Clear global filter
+   */
+  clear(table: any) {
+    table.clear();
+    this.globalFilterValue = '';
+  }
+
+  /**
+   * Apply global filter
+   */
+  onGlobalFilter(table: any, event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    table.filterGlobal(value, 'contains');
   }
 
   /**

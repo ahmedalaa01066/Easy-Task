@@ -5,29 +5,199 @@
   </div>
 
   <!-- Data Table -->
-  <p-table [value]="candidates" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [first]="first"
+  <p-table #dt [value]="candidates" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords" [first]="first"
     responsiveLayout="stack" (onPage)="onPageChange($event)" [scrollable]="true" scrollHeight="600px"
     [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true"
-    [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" [contextMenu]="menuItems"
-    styleClass="candidates-table">
-    <!-- All Candidates Column -->
+    [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" 
+    styleClass="candidates-table"
+    [globalFilterFields]="['firstName', 'lastName', 'email', 'jobCode', 'level', 'manager', 'position', 'phoneNumber', 'management', 'department']"
+    [rowsPerPageOptions]="[10, 25, 50, 100]">
+    
+    <!-- Table Caption with Search -->
+    <ng-template pTemplate="caption">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="position: relative;">
+          <i class="pi pi-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
+          <input 
+            pInputText 
+            type="text" 
+            [(ngModel)]="globalFilterValue"
+            (input)="onGlobalFilter(dt, $event)" 
+            placeholder="Search candidates..." 
+            style="width: 300px; padding-left: 35px;" />
+        </div>
+        <p-button 
+          type="button" 
+          icon="pi pi-filter-slash" 
+          label="Clear" 
+          [outlined]="true" 
+          (onClick)="clear(dt)" />
+      </div>
+    </ng-template>
+
+    <!-- Table Header with Column Filters -->
     <ng-template pTemplate="header">
       <tr>
-        <th id="candidate-col">All Candidates</th>
-        <th id="candidate-col">Code</th>
-        <th id="level-col">Level</th>
-        <th id="level-col">Email</th>
-        <th id="manager-col">Manager</th>
-        <th id="position-col">Position</th>
-        <th id="status-col">Status</th>
-        <th id="level-col">JobCode</th>
-        <th id="level-col">PhoneNumber</th>
-        <th id="level-col">Management</th>
-        <th id="level-col">department</th>
-        <th id="date-col">
-          <div class="date-header text-nowrap">
-            <span>Joining date</span>
+        <th id="candidate-col" pSortableColumn="firstName" style="min-width: 200px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center;">
+              All Candidates
+              <p-sortIcon field="firstName"></p-sortIcon>
+            </div>
           </div>
+        </th>
+        <th id="candidate-col" pSortableColumn="jobCode" style="min-width: 120px;">
+          <div style="display: flex; align-items: center;">
+            Code
+            <p-sortIcon field="jobCode"></p-sortIcon>
+          </div>
+        </th>
+        <th id="level-col" pSortableColumn="level" style="min-width: 120px;">
+          <div style="display: flex; align-items: center;">
+            Level
+            <p-sortIcon field="level"></p-sortIcon>
+          </div>
+        </th>
+        <th id="level-col" pSortableColumn="email" style="min-width: 200px;">
+          <div style="display: flex; align-items: center;">
+            Email
+            <p-sortIcon field="email"></p-sortIcon>
+          </div>
+        </th>
+        <th id="manager-col" pSortableColumn="manager" style="min-width: 150px;">
+          <div style="display: flex; align-items: center;">
+            Manager
+            <p-sortIcon field="manager"></p-sortIcon>
+          </div>
+        </th>
+        <th id="position-col" pSortableColumn="position" style="min-width: 150px;">
+          <div style="display: flex; align-items: center;">
+            Position
+            <p-sortIcon field="position"></p-sortIcon>
+          </div>
+        </th>
+        <th id="status-col" pSortableColumn="candidateStatus" style="min-width: 120px;">
+          <div style="display: flex; align-items: center;">
+            Status
+            <p-sortIcon field="candidateStatus"></p-sortIcon>
+          </div>
+        </th>
+        <th id="level-col" pSortableColumn="phoneNumber" style="min-width: 150px;">
+          <div style="display: flex; align-items: center;">
+            Phone Number
+            <p-sortIcon field="phoneNumber"></p-sortIcon>
+          </div>
+        </th>
+        <th id="level-col" pSortableColumn="management" style="min-width: 150px;">
+          <div style="display: flex; align-items: center;">
+            Management
+            <p-sortIcon field="management"></p-sortIcon>
+          </div>
+        </th>
+        <th id="level-col" pSortableColumn="department" style="min-width: 150px;">
+          <div style="display: flex; align-items: center;">
+            Department
+            <p-sortIcon field="department"></p-sortIcon>
+          </div>
+        </th>
+        <th id="date-col" pSortableColumn="joiningDate" style="min-width: 150px;">
+          <div class="date-header text-nowrap">
+            <span>Joining Date</span>
+            <p-sortIcon field="joiningDate"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+      
+      <!-- Filter Row -->
+      <tr>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'firstName', 'contains')" 
+            placeholder="Search by name" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'jobCode', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'level', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'email', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'manager', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'position', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <p-dropdown 
+            [options]="statusOptions" 
+            (onChange)="dt.filter($event.value, 'candidateStatus', 'equals')" 
+            placeholder="All Status"
+            [showClear]="true"
+            [style]="{'width': '100%'}">
+          </p-dropdown>
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'phoneNumber', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'management', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'department', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
+        </th>
+        <th>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filter($any($event.target).value, 'joiningDate', 'contains')" 
+            placeholder="Filter" 
+            style="width: 100%;" />
         </th>
       </tr>
     </ng-template>
@@ -52,7 +222,7 @@
           </div>
         </td>
 
-         <td id="level-cell">
+        <td id="level-cell">
           <span class="level-text text-nowrap">{{ candidate.jobCode }}</span>
         </td>
         <!-- Level -->
@@ -81,10 +251,6 @@
           </p-tag>
         </td>
 
-        <!-- jobCode -->
-        <td id="jobCode-cell">
-          <span class="position-text">{{ candidate.jobCode }}</span>
-        </td>
         <!-- phoneNumber -->
         <td id="phoneNumber-cell">
           <span class="position-text">{{ candidate.phoneNumber }}</span>
@@ -92,7 +258,6 @@
         <!-- management -->
         <td id="management-cell">
           <span class="position-text">{{ candidate.management }}</span>
-
         </td>
         <!-- department -->
         <td id="department-cell">
@@ -110,7 +275,7 @@
     <!-- Empty State -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="100%" class="empty-message">
+        <td colspan="11" class="empty-message">
           <div class="empty-state">
             <i class="pi pi-users empty-icon"></i>
             <p>No candidates found</p>
